@@ -1,0 +1,184 @@
+# Historia de las consolas de Videojuegos
+
+Que define una consola?
+
+Wikipedia: "sistema electrónico de entretenimiento que ejecuta videojuegos contenidos en cartuchos, discos ópticos, discos magnéticos, tarjetas de memoria o en cualquier dispositivo de almacenamiento."
+
+Meh
+
+Que es un videojuego?
+
+1945 Von Neumann arquitectura estructurada de procesador-memoria
+
+1947 Transistor en laboratorios Bell un poco de rebote por un becario de vacaciones
+
+1959 Circuito integrado con 6 transistories
+
+generaciones
+1940-56 valvulas vacio
+56-63 transistories
+64-71 circuitos
+1971 micorporcesadores
+
+1947 primera patente para videjuego "hackeando" un televisor CRT
+
+1947 Primer video juego programado Turochamp para jugar al ajedrez no se ejecutó hasta 100 años más tarde
+
+1950 Bertie the brain, ordenador por tubos de vacio para jugar al tres en raya
+
+1951 Torres quevedo crea una máquina capaz de hacer movimientos en tablero de ajedrez en un tablero con un intrincado sistema de poleas y palancas
+
+1951 Nimrod
+
+1951-52 LAs damas de Christopher Strachey, ejecutado en un ordenador de propósito general comercial.
+
+1951-52 Mate en dos jugadas, el primero en reproducir sonidos, usaba cintas temporadas
+
+1952 OXO juego de trs en ralla para EDSAC
+
+1954 Billar para MIDSAC, un osciloscopio
+
+1958 Tennis for Two, usa los codigos para calculos balisticos
+
+1961-62 Spacewar! prrogramado e interactivo (no era por turnos) pelea de naves con un agujero negro en el centro, estudiantes de MIT usaron un PDP-1 que sobraba y fue donado a una asociacion de maquetas
+
+1971 Computer Space creddo por los que acabarían formando Atari
+
+1966-71 The Brown Box, Ralph baer impulsó que los videojuegos comenzaran como industria
+
+1972 Magnavoa Odyssey, Modelo desarrollado sobre la Brown Box reemplazando valvulas de vacio. Usaba un sistema de "Pegatinas" para cambiar entre diferentes juegos "programados"
+
+1972 Pong, Maquina recreativa de Atari basada en la visita que hicieron a las oficinas de Magnabox, problemas de pleitos derivados por las firmas del libro de visitas. Cedieron os derechos de los juegos durante un año asique se pasaron de brazos cruzados recaudadndo del pong sin hacer ni el huevo.
+
+# Primera Generación de consolas
+-Componentes electronicos discretos
+-Los juegos eran componentes nativos, no extraibles
+-Elementos visuales simples
+
+1977 Blip Pong, maquina de pong con engranajes y cuerdas para simular los movimientos
+
+El mercado se inundó de clones del Pong copiando literalmente el chip 
+Crash en 1977
+
+# Segunda generacion de consolas
+-Microprocesadores, los uegos ya no son componentes, se programan
+-Oponentes por IA
+-Juegos enc artuchos
+-Multiples pantallas
+-Audio  (maximo 3 canales)
+-Colores (1-4 bits)
+-REsoluciones bajas 160x192
+
+Atari 2600 (Atari VCS)
+-MOS technology 1.19Mhz 13 bits en bus de direcciones
+-ROM cartucho de 12 bits en el bus de direcciones ($Kib direccionable, 64 Kib con bank switching)
+-RAM 128 Bytes (Ampliable en cartuchos)
+- Resolucion de 160*192, 128 colores diferentes (no simultaneos)
+-Sin memoria de video, sin frame buffer
+
+https://www.wired.com/2009/03/racing-the-beam/
+
+FRAME BUFFER: Infomracion de cada uno de los pixeles de pantalla (Matriz) que se pasa de grafica a monitor
+
+Al no tener un Frame Buffer, la consola tiene que estar diciendole todo el tiempo al monitor cada uno de los pixeles que tiene que ir pintadno
+
+"El fosofro se excitaba y decia AAAA y se ponia azul"
+-Pedro Pablo
+
+"Eso es lo que se conoce como retrasado horizontal
+*Procedo a tumbarme en la mesa*"
+-Pedro Pablo
+![Alt text](./Assets/image.png)
+Retraso vertical es el tiempo entre el ultimo pixel de un frame y el siguiente. (Tiempo que el escaneo tarda en pasar el laser del ultimo pixel de la linea al primer pixel de la siguiente)
+
+En la zona de representación por pantalla se considera un tiempo de OVerscan que es el tiempo que el CRT tarda en reiniciar el rayo.
+
+El procesador tenia 1.19 Mhz, lo cual dejaba como 3 pixeles por segundo y 228*292*60 son como 3 millones, lo cual nos dejaba solo 22 bytes para instrucciones.
+
+Para mitigarlo se inventó el concepto de sprite, Aunque hoy es el concepto de una imagen discreta, personaje,arma etc.. en su momento eran excepciones de memoria que cambiaban el procesamientro entre logica e imagen.
+
+Un sprite es una manera de indicar a la tarjeta grafica los lugares donde se sobreescribia un color con otro.
+
+No podemos dibujar 40 bytes asique tenemos que hacer trucos para ahorrar "ancho de banda"
+Un truco para ahorrar memoria es utilizar fondos o sprites simétricos para ocupar solo la mitad de memoria (20 bytes)
+El fondo estaba restringido a 2 colores almacenados en bits 0, 1
+Cada pixel dado ocupa 4 en pantalla (10 bytes)
+
+La atari soportaba 5 sprites, 2 de ellos de 8 pixels y 3 de ellos de 1 pixel
+la deteccion de colisiones la hacia la tarjeta grafica al dibujar un sprite encima del otro
+
+Space invaders movia las posiciones de los sprites para dibujar varias veces el mismo sin superar el limite de 5
+
+1981 Yars Revenge generaba fondos procedurales interpretando los bits del propio código del juego
+AL seprarse Atari de lo que acabó siendo Activision surgieron pleitos legales que ganó este último porque la plataforma no conllevaba derechos de autor sobre el contenido creado sobre ella. Esto dio lugar a desarrolladores no controlados
+ En esta generación comienzan a aparecer las consolas portátiles con juegos unicos grabados en pantalla LCD como la Game and watch
+
+El pAcman para atari fue programado en 5 meses respecto a la arcadeusaba 4 kib vs 16 kib de rom, 128 bytes vs 2kib de ram y usaba el MOS 6507 vs el Zilog Z80 además de carecer del frame buffer del modelo arcade. Esto y las limitaciones de la consola resultaban en que solo se podía dibujar un fantasma por frame haciendo que parpadearan de manera extraña.
+
+El mercado se comenzó a saturar de clones de consolas, carencia de regulaciones en los juegos y la dificultad de saber cuantas copias fabricar para los juegos, esto resultó en el CRASH del 83.
+
+esto resulto en el comienzo del contro ferreo de los desarrolladores por partes de las empresas
+
+# Tercera generación
+
+### Nes (Nintendo Entertanment System -Famicom)
+- Controles de cruceta (D-pad)
+- Resoluciones mayores 82546x2440 320x2009
+- 25-32 colores simultaneos
+- 64-100 sprites en pantallas
+- 5 Canales de audio
+- Punto de inicio de multiples sagas: Zelda, Mario, Metroid...
+- Grafica (Picture Processing Unit) de 5.37 Mhz
+
+Una caracteristica importante es el scroll y cambiso de escena, poder ver niveles mas grandes
+
+Mapa de memoria direccionable por la CPU
+||||
+|-------------|------|-------------|
+|$0000 - $07FF|2 Kib|Espacio de RAM|
+|$0800 - $1FFF|3 * 2 Kib|Mirroring de la RAM... Un total desperdicio de espacio.|
+|$2000 - $2007|8 Byte|Registros de PPU.|
+|$2008 - $3FFF|8 Kib -8|Mirroring de los registros del PPU|
+|$4000 - $4017|24 bytes|APU y dispositivos I/0|
+|$4018 - $4001F|8 bytes|Reg test de APU (Deshabilitado)|
+|$4020 - $FFFF|4Kib - 32|Cartucho de la nes|
+
+El renderizado en la NES Comienza por el Backdrop, Low priority sprites, Background y High priority Sprites
+Sprites de 8x8 o 16x16 con 4 colores de paletas de 8 colores.
+La limitacion hacia que la imagen no pudiese representar mas de 2 colores en cada bloque de 8x8, pero al subdividir la pantalla en cuadriculasy con ingenio se podian hacer imagenes con decenas de colores
+
+En una tabla de 4Kib cabian 256 sprites de 8x8
+Al tener el ancho de pantalla 256, si se intenta dibujar un sprite en el lado, este sale de la pantalla por el lado derecho, pero esto no s epude hacer por el lado izquierdo. Pasaba igual con la vertical, Mario puede irse para arriba por la liana pero al salir de abajo tiene que taparse el sprite con el Tubo
+
+El scroll se creaba con una region de memoria del doble de ancho de la pantalla que creaba y destruia el nivel segun se avanzaba
+
+### Sega Master System
+
+copiar algo de specs
+Tenia los mismos problemas de ancho de banda
+El frame buffer duncionaba con pixels, no con sprites
+
+
+
+### Sega Master System II
+Version REDUCIDA del primer modelo
+1991 SOnic the Hedgehog
+
+Commander Keen por ID sofware fue un intento de John Carmack de portear el mario PC pero ante la negativa de Nintendo surgió este juego de importancia histórica por ser el primero en ser dirigido por datos y poder separar el motor del juego
+
+### Atari 7800
+### Atari XEGS
+### AmstradGX4000
+
+
+# Cuarta generación
+
+Sin cabios destacables, solo mejor hardware (Generación de 16 bits)
+
+### Sega Mega Drive (Sega Genesis)
+-CPU Motorola 68000
+-80 sprites de hasta 32x32
+-AddOn para CDs
+-Chip de audio es el Zilog Z80, el mismo  procesador principal de la generación anterior, esto premitía retrocompatibilidad. Eventualmente se haría lo mismo con Sony para la PS2 y la PS1.
+Aunque esto requería de un Add-On
+-Parallax

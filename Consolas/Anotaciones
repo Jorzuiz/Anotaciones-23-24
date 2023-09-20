@@ -1,0 +1,30 @@
+#CONSOLAS (Copium)
+Dependencias
+SO
+EDA
+EC
+
+Desarrollo multiplataforma
+C++ en PC
+Despliegue en consola exclusivamente en LAB
+
+Patrones de programacion Singleton, Observer...
+
+Lab 10, 11, 1 y 2
+
+PLANIFICAR LAS PRACTICAS
+
+50% PRACTICAS
+50% Examen (10% teorico 40% practico, no hace falta aprobar ambos pero tiene que ser 5)
+
+Practicas no recuperables, impiden presentarse a Examen
+
+Recompilar debe ser automático
+
+DOCUMENTACION
+
+No-Nos
+-Variables Globales
+-No compila en alguna plataforma
+-No puede haber leaks
+-Separación Lógica-Motor
