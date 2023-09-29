@@ -1,0 +1,106 @@
+/*
+ * MUY IMPORTANTE: Solo se corregirán los comentarios y el código
+ * contenidos entre las etiquetas <answer> y </answer>.
+ * Toda modificación fuera de esas etiquetas no será corregida.
+ */
+
+/*@ <answer>
+ *
+ * MARP51 Jorge Zurdo Izquierdo
+ *
+ *@ </answer> */
+
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <limits>
+#include <queue>
+#include "../PriorityQueue.h"
+using namespace std;
+
+
+/*@ <answer>
+ 
+ Escribe aquí un comentario general sobre la solución, explicando cómo
+ se resuelve el problema y cuál es el coste de la solución, en función
+ del tamaño del problema.
+ 
+ @ </answer> */
+
+
+// ================================================================
+// Escribe el código completo de tu solución aquí debajo (después de la marca)
+//@ <answer>
+
+// 5 4                <- 5 Candidaturas (int C) 4 Escaños (Int E) 
+// 100 226 20 80 170  <- 100 votos a candidatura 1, 226 a candidatura 2, etc..
+// 3 3
+// 60 28 60
+// 0 0                <- Caso de parada
+
+struct partido{
+  int votos;
+  int escaños;
+  int coeficiente;
+};
+
+bool operator>(partido const& a, partido const& b){
+  // La asignación de cada escaño se rige por el coeficiente c_k=v_k/(e_k+1)
+  // En caso de empate en el coeficiente se elige la de mayor votos
+  // En caso de otro empate se elige la de índice menor
+  return a.coeficiente > b.coeficiente || 
+        (a.coeficiente == b.coeficiente && a.votos > b.votos) ||
+        (a.coeficiente == b.coeficiente && a.votos == b.votos);
+}
+
+void asignaEscaños(int escaños, partido partidos){
+  while (escaños > 0){
+    if (partidos.front5().escaños)
+    escaños--;
+  }
+}
+
+bool resuelveCaso() {
+  
+  // leemos la entrada
+  int C, N;
+  cin >> C >> N;
+  
+  if (C == 0)
+    return false;
+  
+  // leer el resto del caso y resolverlo
+  // La inicializacion de escaños por candidatura es de 0 por defecto (e_k=0)
+  priority_queue<partido> partidos;
+  for (int i = 0; i < C; i++)
+  {
+    int votos; 
+    cin >> votos;
+    partidos.push({votos, 0, 0});
+  }
+  
+  
+  
+  return true;
+}
+
+//@ </answer>
+//  Lo que se escriba dejado de esta línea ya no forma parte de la solución.
+
+int main() {
+  // ajustes para que cin extraiga directamente de un fichero
+#ifndef DOMJUDGE
+  std::ifstream in("casos.txt");
+  auto cinbuf = std::cin.rdbuf(in.rdbuf());
+#endif
+  
+  // Resolvemos
+  while (resuelveCaso());
+  
+  // para dejar todo como estaba al principio
+#ifndef DOMJUDGE
+  std::cin.rdbuf(cinbuf);
+  system("PAUSE");
+#endif
+  return 0;
+}
