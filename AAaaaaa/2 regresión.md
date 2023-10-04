@@ -38,3 +38,21 @@ El valor es $W_1=291,5$ al restarle el 1 de alguna cosa que nor ecuerdo
 
 Para evitar imprecisiones en los datos tenemos que normalizarlos.
 Podemos dividirlos por la maxima, calcular la media y la dev tipica para restarsela....
+
+## 2.3 clasificacion
+Podemos definir diferentes sistemas por ejemplo si contiene valores discretos o contiene decimales.
+Para estos problemas discretos los modelos de regresión pueden ser imprecisos.
+![Alt text](image-1.png)
+Para ello tenemos que buscar convertirlo en valores discretos
+![Alt text](image-2.png)
+
+## 2.4 Regularizacion
+Para evitar la sobreadeptacion usamos una cantidad de ejemplos y una de comprobaciones.
+Los datos pueden no ser suficientemente representativos del problema, que falten casos limites, o que sean demasiados dispares.
+Comprobar atributos que introducen ruido. En caso de una clasificación de mamíferos comprobar el pelo no es fiable, las ballenas no tienen pelo.
+Estos atributos podrian detectarse solos en la muestra y bajar su peso.
+la varianza es lo contrario del sesgo.
+
+2.4.6.1 los valores de lambda tienen que ser mayor de 0 porque si no implica la no penalizacion. valores superiores de 1 reducen overfitting pero aumentan sesgo
+
+2.4.7.1 El error del dataset es la media de los errores de los ejemplos.
