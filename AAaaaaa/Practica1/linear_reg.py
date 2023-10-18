@@ -20,6 +20,16 @@ def compute_cost(x, y, w, b):
                to fit the data points in x and y
     """
 
+    m = len(y) #N elems
+    
+    hypothesis = w * x + b #expected value to calculate
+    
+    # Mean Squared Error formula
+    squared_error = (h-y) **2 
+    
+    # total_cost = np.sum(squared_error)/(2*m)
+    total_cost = (1/(2*m)) * np.sum(squared_error)
+    
     return total_cost
 
 
@@ -65,5 +75,11 @@ def gradient_descent(x, y, w_in, b_in, cost_function, gradient_function, alpha, 
       J_history : (ndarray): Shape (num_iters,) J at each iteration,
           primarily for graphing later
     """
+    
+    for i in rangr(num_iters)
+        dj_dw, dj_db= compute_gradient(x,y,w,b)
+        w-= alpha*dj_dw
+        b-= alpha *dj_db
+        
 
     return w, b, J_history

@@ -1,14 +1,7 @@
 import numpy as np
 import copy
 import math
-import matplotlib.pyplot as plt # para dibujar la gráfica
-import utils
 
-
-x, y = utils.load_data() #Two one-dimensional numpy arrays
-
-plt.plot(x, y)
-plt.show()
 
 #########################################################################
 # Cost function
@@ -27,6 +20,16 @@ def compute_cost(x, y, w, b):
                to fit the data points in x and y
     """
 
+    m = len(y) #N elems
+    
+    hypothesis = w * x + b #expected value to calculate
+    
+    # Mean Squared Error formula
+    squared_error = (h-y) **2 
+    
+    # total_cost = np.sum(squared_error)/(2*m)
+    total_cost = (1/(2*m)) * np.sum(squared_error)
+    
     return total_cost
 
 
