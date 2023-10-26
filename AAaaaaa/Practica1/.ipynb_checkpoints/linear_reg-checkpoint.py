@@ -22,12 +22,12 @@ def compute_cost(x, y, w, b):
 
     m = len(y) #N elems
     
-    hypothesis = w * x + b #expected value to calculate
+    error = w * x + b #expected value to calculate
     
     # Mean Squared Error formula
-    squared_error = (h-y) **2 
+    squared_error = (error-y) **2 
     
-    # total_cost = np.sum(squared_error)/(2*m)
+    # MSE = np.sum(squared_error)/(2*m)
     total_cost = (1/(2*m)) * np.sum(squared_error)
     
     return total_cost
@@ -47,7 +47,14 @@ def compute_gradient(x, y, w, b):
       dj_dw (scalar): The gradient of the cost w.r.t. the parameters w
       dj_db (scalar): The gradient of the cost w.r.t. the parameter b     
      """
+    
+    m = len(y)
+    hypothesis = w * x + b
 
+    dj_dw = np.sum((hypothesis-y)*x)/m
+    
+    dj_db = np.sum((hypothesis-y))/m
+    
     return dj_dw, dj_db
 
 
@@ -75,5 +82,15 @@ def gradient_descent(x, y, w_in, b_in, cost_function, gradient_function, alpha, 
       J_history : (ndarray): Shape (num_iters,) J at each iteration,
           primarily for graphing later
     """
+    J_history = np.zeros(num_iters)
+    w = w_in
+    b = b_in
+    
+    for i in range(num_iters):
+        dj_dw, dj_db= compute_gradient(x,y,w,b)
+        w-= alpha*dj_dw
+        b-= alpha *dj_db
+        J_history[i]= cost_function(x,y,w,b)
+        
 
     return w, b, J_history
