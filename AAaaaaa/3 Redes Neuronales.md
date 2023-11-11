@@ -47,3 +47,35 @@ for c in a2 # para todas las neuronas de la capa 1
 for j in a1
 a[i]=ai[j]*t1[i,j]
 ```
+
+Ciclo de propgacion
+1. Carga los inputs en las neuronas
+2. Propaga la red
+3. Calcula el error
+4. Calcula $\delta$ de cada conexión
+5. calcula los pesos de inicio/final de la red
+6. Almacena el error
+
+Ejemplo
+Neuronas de Entrada 2
+Neuronas de capa oculta 2
+Neuronas de salida 2
+Salidas esperadas 0.7 0.1
+
+Pesos iniciales
+$\theta_1$ 2x2 [[0.1,0.2],[0.2,0.1]]
+$\newline\theta_2$ 2x2 [[0.2,0.3],[0.1,0.1]]
+Salida [0.5,0.4]
+
+
+y = [0.7,0.1]
+
+Y = [0.5,0.4]
+$\newline a^3 a^3_1 a^3_2$
+$\newline (a^3_1-y_1)*a^3_1(1-a^3_1)$
+
+(0.5-0.7)*0.5*(1-0.5)= 0.05 = $\delta^3_1\newline$
+(0.4-0.1)*0.4*(1-0.4)= 0,072 = $\delta^3_2\newline$
+$\delta^3[-0.05,0.072]$ = Error
+
+$\newline\delta^2_1=\delta^3_1*\theta^2_{1,1}*a^2_1*(1-a_1)+\delta^3_2*\theta^3_{1,2}*(a^2_1*)$
