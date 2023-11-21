@@ -4,8 +4,10 @@ El modelo de regresión lineal funciona como en matemáticas/estadística
 
 Al parefer segun cosas que tengo que recordar de bachillerato para hallar el minimo de una funcion hay que hacer la derivada, la integral es para hallar el área.
 Que carajos es una derivada parcial?
-![Alt text](image.png)
-por lo visto hay que ir modificando los valores de Alpha y W hasta llegar al minimo?
+
+![Alt text](./Assets/image.png)
+
+Por lo visto hay que ir modificando los valores de Alpha y W hasta llegar al minimo?
 
 |--|--|--|
 |Edad|Salario|Banco|
@@ -42,9 +44,8 @@ Podemos dividirlos por la maxima, calcular la media y la dev tipica para restars
 ## 2.3 clasificacion
 Podemos definir diferentes sistemas por ejemplo si contiene valores discretos o contiene decimales.
 Para estos problemas discretos los modelos de regresión pueden ser imprecisos.
-![Alt text](image-1.png)
-Para ello tenemos que buscar convertirlo en valores discretos
-![Alt text](image-2.png)
+Para ello tenemos que buscar convertirlo en valores discretos.
+
 
 ## 2.4 Regularizacion
 Para evitar la sobreadeptacion usamos una cantidad de ejemplos y una de comprobaciones.

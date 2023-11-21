@@ -31,3 +31,29 @@ $Recall = \frac{TP}{TP+FN}$
 $Precision = \frac{TP}{TP+FP}$
 6. F1 Score
 $2*\frac{Precision*Recall}{Precision+Recall}=\frac{2*TP}{2*TP +FP+FN}$
+
+
+### 4.5 Adding more data
+Que ocurre cuando no tenemos suficientes datos para el entrenamiento?
+Video -> Datos distorsionados de manera artificial
+Sonido -> Ruido
+Sintetizarlo
+
+Verificar que los datos existentes tienen un sesgo bajo antes de comenzar a buscar mas.
+1 Sintetirazrlos
+2 Recolectarlos a mano
+3 Crowdsourcing
+
+### 4.6 Transfer Learning
+Obtener un modelo entrenado
+
+### 4.7 ML architecture
+
+Se lanza el sistema en un servidor y se lanzan peticiones desde el cliente
+
+### 4.8 ROC curve
+False Positive Rate
+
+$\boxed{FPR = \frac{FP}{FP+TN}}\qquad\begin{cases}\text{False Positive} \\ \text{True Negative}\end{cases}$ 
+
+Se debe crear un umbral para determinar el espacio ROC donde aceptaremos los datos como cierto-falseo, podemos 
