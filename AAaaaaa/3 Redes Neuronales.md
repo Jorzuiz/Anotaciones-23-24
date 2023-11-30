@@ -14,7 +14,7 @@ La función que nos indica la activación se llama *Función de Activación*
 Cada entrada de la neurona se pondera con un peso diferente que simula el funcionamiento de la sinapsis.
 Esta idea se aplica en un tipo de red conocida como Perceptrón Multicapa
 $$\boxed{\text{Capa neuronal de entrada}}\rightarrow \boxed{\text{Capa/s oculta}} \rightarrow \boxed{\text{Capa de salida}} $$
-![Alt text](image-3.png)
+![Alt text](./Assets/neuralEsquema.png)
 
 Cada una de estas conexiones se pondera con diferentes pesos, una neurona de la capa entrada puede conectarse con peso $0,1$ a la primera de la siguiente, $0,5$ a la segunda, $0,3$ a la tercera....
 Una red neuronal puede definirse como un vector de ecuaciones:
@@ -30,7 +30,7 @@ $$y(x)=\begin{cases}1 \qquad \text{si}\quad x\geq \alpha \\ -1 \quad o \quad 0 \
 
 Forward Propagation
 
-![Alt text](image-4.png)
+![Alt text](./Assets/perceptron.png)
 
 ## How dows an ANN learn?
 
