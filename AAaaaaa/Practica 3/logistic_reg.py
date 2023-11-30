@@ -2,7 +2,7 @@ import numpy as np
 import copy
 import math
 
-#formula defining a grow with a significan acceleration and a final stabilization resembling a S
+
 def sigmoid(z):
     """
     Compute the sigmoid of z
@@ -15,7 +15,9 @@ def sigmoid(z):
 
     """
     
-    g = 1/(1 + np.exp(-np.array(z)))
+    z = np.array(z)
+    
+    g = 1 / (1 + np.exp(-z))
 
     return g
 
@@ -35,6 +37,14 @@ def compute_cost(X, y, w, b, lambda_=None):
     Returns:
       total_cost: (scalar)         cost
     """
+    
+    m = y.shape[0]  # Number of training examples
+    y = y.reshape(-1, 1)
+    z = np.dot(X, w) + b
+    h = sigmoid(z)  # Sigmoid function
+
+    # Calculate the cost
+    total_cost = -1 / m * np.sum(y * np.log(h) + (1 - y) * np.log(1 - h))
 
     return total_cost
 
@@ -53,6 +63,15 @@ def compute_gradient(X, y, w, b, lambda_=None):
       dj_db: (scalar)                The gradient of the cost w.r.t. the parameter b.
       dj_dw: (array_like Shape (n,1)) The gradient of the cost w.r.t. the parameters w.
     """
+    
+    m = y.shape[0]  # Number of training examples
+    z = np.dot(X, w) + b
+    h = sigmoid(z)  # Sigmoid function
+
+    # Calculate the gradients
+    dj_db = 1 / m * np.sum(h - y)
+    dj_dw = 1 / m * np.dot(X.T, (h - y))
+
 
     return dj_db, dj_dw
 
@@ -72,6 +91,19 @@ def compute_cost_reg(X, y, w, b, lambda_=1):
     Returns:
       total_cost: (scalar)         cost 
     """
+    
+    m = len(y)  # Number of training examples
+    z = np.dot(X, w) + b
+    h = sigmoid(z)  # Sigmoid function
+
+    # Calculate the standard logistic regression cost
+    log_loss = -1 / m * np.sum(y * np.log(h) + (1 - y) * np.log(1 - h))
+
+    # Calculate the regularization term
+    regularization = (lambda_ / (2 * m)) * np.sum(w[1:]**2)  # Exclude the bias term (w0)
+
+    # Combine the two terms to get the total cost
+    total_cost = log_loss + regularization
 
     return total_cost
 
@@ -91,6 +123,16 @@ def compute_gradient_reg(X, y, w, b, lambda_=1):
       dj_dw: (ndarray Shape (n,)) The gradient of the cost w.r.t. the parameters w. 
 
     """
+    m = len(y)  # Number of training examples
+    z = np.dot(X, w) + b
+    h = sigmoid(z)  # Sigmoid function
+
+    # Calculate the gradient without regularization
+    dj_db = 1 / m * np.sum(h - y)
+    dj_dw = 1 / m * np.dot(X.T, (h - y))
+
+    # Add the regularization term (except for the bias term)
+    dj_dw[1:] += (lambda_ / m) * w[1:]
 
     return dj_db, dj_dw
 
@@ -122,6 +164,20 @@ def gradient_descent(X, y, w_in, b_in, cost_function, gradient_function, alpha, 
           primarily for graphing later
     """
 
+    m, n = X.shape
+    w = w_in.copy()
+    b = b_in
+    J_history = np.zeros(num_iters)
+
+    for i in range(num_iters):
+        dj_db, dj_dw = gradient_function(X, y, w, b, lambda_)
+
+        w -= alpha * dj_dw
+        b -= alpha * dj_db
+
+        cost = cost_function(X, y, w, b, lambda_)
+        J_history[i] = cost
+
     return w, b, J_history
 
 
@@ -142,5 +198,14 @@ def predict(X, w, b):
     p: (ndarray (m,1))
         The predictions for X using a threshold at 0.5
     """
+
+    m = X.shape[0]
+    p = np.zeros((m, 1))
+
+    # Calculate the probabilities using the logistic function
+    z = np.dot(X, w) + b
+    h = sigmoid(z)
+    # Apply the threshold at 0.5 to make predictions
+    p = (h >= 0.5).astype(int)
 
     return p
