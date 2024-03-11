@@ -35,3 +35,13 @@ En lado derecho del componente añadimos una entrada por animacion
 En el BP deñl Caballero añadimos nodo event tick
 Copiamos la rama de character movement hasta el greater y sacamos un brnach
 Conectamos el true al isdancing y el vent tick a la entrada
+
+# Iluminacion
+Cargamos el fbx y arrastramos TODO al nivel
+Abrimos el panel de place actors en la escena, el cuadro con el mas arriba
+Colocamos bombillo, poemos cambiar intensidad y atenuacion con el medidor de candelas y de atenuacion
+Construimos la luz desde Build>BuildLignthing only
+Creamos en el panel de actores un Post Process Volume y lo ajustamos a la habitacion
+En su pestaña de detalles buscamos Infinite Extent para no desactivar su post procesado solo dentro, sino que lo aplique a todo el entorno
+Podemos cambiar de candelas a lumens en las propedades del proyecto
+Cambiar en exposure volume para activar exposure y metering mode, ajustar como a 5
