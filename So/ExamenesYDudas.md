@@ -12,7 +12,8 @@
 |RR(3)|||||p2|p2|p3|p3|p3|||||||p1|p1|p2|p2|||
 
 >Evento de planificacion en 10-11
-<>11-12 Sale de ES en 11-12 y entra en cola siendo más prioritaria robando el proceso e insertando P3 en cola de nivel 2
+
+>11-12 Sale de ES en 11-12 y entra en cola siendo más prioritaria robando el proceso e insertando P3 en cola de nivel 2
 
 Porcentaje de CPU 
 - $\frac{20}{21}100$
