@@ -26,7 +26,7 @@ Añadimos un objeto vacio al xr origin (hijo) llamado locomotion system y le añ
 Creamos tres componentes para move, turn y teleport
 PAra cargar el mando tenemos que marcar Use Reference
 Ajustamos velocidad, controles a left/right con turn/move locomotion
-Turn tiene dos scripts para continuous o snap
+Turn tiene dos scripts para continuous o snap   
 
 Descargamos en samples XR InteracionToolkit y cargamos el Tinneling Vignette a la camara
 Puede ayudar a evitar parte del mareo, idk how

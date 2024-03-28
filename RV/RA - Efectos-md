@@ -1,0 +1,49 @@
+# Sistema de Partículas
+Nieve, humo, lluvia, magia...
+Unity Particle Pack [Asset Store]
+HOLLOW KNIGHT MENTION
+
+Particle System vs VSX graph
+
+### VFX GRaph
+Funciona con nodos semejantes a los blueprints de Unreal
+Conviene para sistemas de particulas grandes
+
+### Particle System
+Nieve
+Modulo pincipal
+" emission
+" Shape
+" Noise
+" Collision
+
+- Humo
+Principla, emission shape renderer texture sheet animation noise
+
+- Fuego
+
+-Lluvia
+
+### Escena de Unity
+Simplemente trastear con las caracteristicas del gameobject en la escena
+Boton Derechho en Jerarquia > Effects > Particle System
+Prewarm cambia el tiempo de inicio del sistema
+Starta Lifetime genera las particulas siguiendo una curva de crecimiento, pueden crearse en un rango (Esto en la flecita de la derecha)
+Los valores negativos son negativos
+En color usaremos gradiente. Podemos añadir varios puntos de entrada
+Emission > Permite emitir rafagas (burst)
+Texture sheet animation para los spritesheets
+
+### Nieve
+Shape Box, cambiar escala en x e y para ocupar todo el espacio que vayamos a usar (Callejon). Mandarlo arriba, invertir velocidad (Cae abajo) o añadir gravedad (0,1). Reducir tamaño (start size 0,2) Emission Rate over time (100) Collision (Dampen 1) Noise (Strenth 0.5)
+
+### Lluvia
+Elongar particulas y bajar alpha. Velocity over lifetime en negativo x e Y, marcar relativo al mundo.
+
+### Fuego
+Duracion 10, prewarm, start lifetime 4, tamaño aleatorio entre 1 y 3, start speed 0, simulation space world, shape circle, radius 0,5, Añador puntos en gradient con transparencias en los valores al inicio y al final (0-15%, 85-100%), size over lifetime separate axes random between constants X1.25, Y1.5, renderer large flame, texture sheet animation 8, 8
+
+### Humo
+Textura SmokeLight Rotacion over time
+
+### Explosion
