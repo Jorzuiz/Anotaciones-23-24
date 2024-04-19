@@ -2,15 +2,15 @@
 Edit > Project Settings > XR plugin, install XR PLugin, activar Open XR
 
 Cambiar opciones en Build Settings(File), tiene que estar en compatible con android
-Cambuiar project settings(Edit) para el modo de color y mas cosas segun la guia
-Descargar en Pakcage Manger (window) XR interactionToolkit con los starter assets de sample
+Cambiar project settings(Edit) para el modo de color y mas cosas según la guía
+Descargar en Pakcage Manger (window) XR interactionToolkit con los starter assets de sample.
 
-Con la escena del campus borramos la camara y creamos el XR origin rig
+Con la escena del campus borramos la cámara y creamos el XR origin rig
 Cambiamos las opciones de tracking (inspector) a suelo
-En Left/Right hand controller estan las acciones, es una capa de abstraccion para no preocuparse por los botones del visor, solo las acciones con los objetos
+En Left/Right hand controller están las acciones, es una capa de abstracción para no preocuparse por los botones del visor, solo las acciones con los objetos.
 Recordar darle al project validation para resolver los problemas
-AL lado del Script XR controller hay un icono de dos lineas, si pulsamos podemos cargar los presets
-Borramos todos los componentes que no sean XXR COntroller
+AL lado del Script XR controller hay un icono de dos lineas, si pulsamos podemos cargar los presets.
+Borramos todos los componenNOtes que no sean XXR COntroller
 Añadimos el componente XR Direct Interactor
 A las cajas tendremos que añadir XR Grab Interactable
 Podemos cambiar el movement type para hacer que el objeto sea kinematico o que reacciones solo a ser recogido por el controlador
