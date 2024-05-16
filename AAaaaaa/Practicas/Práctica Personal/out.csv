@@ -1,60 +1,21 @@
 ,Name,Tier,Type,Category,Masterwork Type,Masterwork Tier,Crafted,Crafted Level,Kill Tracker
-210,Red Herring,Legendary,Rocket Launcher,Power,Blast Radius,10.0,True,17,535
-213,Empirical Evidence,Legendary,Sidearm,KineticSlot,Stability,10.0,True,31,1715
 214,Edge of Intent,Exotic,Glaive,Energy,,10.0,True,6,374
 220,Sweet Sorrow,Legendary,Auto Rifle,Energy,,,True,16,954
-221,The Enigma,Legendary,Glaive,Energy,Range,10.0,True,95,23
-222,Explosive Personality,Legendary,Grenade Launcher,Energy,Reload Speed,10.0,True,33,2316
-223,Recurrent Impact,Legendary,Machine Gun,Power,Range,10.0,True,32,1654
-230,The Other Half,Legendary,Sword,Power,Impact,10.0,True,41,1089
-231,Osteo Striga,Exotic,Submachine Gun,KineticSlot,,10.0,True,20,1782
 234,Beloved,Legendary,Sniper Rifle,Energy,,,True,16,867
-237,Taipan-4fr,Legendary,Linear Fusion Rifle,Power,Range,10.0,True,26,718
-239,Brigand's Law,Legendary,Sidearm,Energy,Range,10.0,True,29,2831
 244,Forensic Nightmare,Legendary,Submachine Gun,KineticSlot,Handling,10.0,True,16,1224
-245,Ammit AR2,Legendary,Auto Rifle,Energy,Reload Speed,10.0,True,21,1007
-246,Planck's Stride,Legendary,Machine Gun,Power,,,True,25,819
-248,Hollow Denial,Legendary,Trace Rifle,Energy,Range,10.0,True,17,1079
-251,Without Remorse,Legendary,Shotgun,Energy,Range,10.0,True,20,851
-252,Austringer,Legendary,Hand Cannon,KineticSlot,Range,10.0,True,30,147
-256,CALUS Mini-Tool,Legendary,Submachine Gun,Energy,Range,10.0,True,31,2161
 261,Come to Pass,Legendary,Auto Rifle,Energy,Reload Speed,10.0,True,16,862
-262,Revision Zero,Exotic,Pulse Rifle,KineticSlot,,10.0,True,22,1153
-264,Tarnation,Legendary,Grenade Launcher,Power,Blast Radius,10.0,True,19,738
 265,Wastelander M5,Legendary,Shotgun,KineticSlot,Range,10.0,True,16,600
 269,Piece of Mind,Legendary,Pulse Rifle,KineticSlot,Range,10.0,True,16,854
-271,Nezarec's Whisper,Legendary,Glaive,Energy,Range,10.0,True,18,1111
 272,Fire and Forget,Legendary,Linear Fusion Rifle,Power,,,True,16,189
-278,Palmyra-B,Legendary,Rocket Launcher,Power,Reload Speed,10.0,True,23,639
-282,Disparity,Legendary,Pulse Rifle,KineticSlot,Stability,10.0,True,27,993
-283,Ragnhild-D,Legendary,Shotgun,KineticSlot,Range,10.0,True,18,645
-284,Tears of Contrition,Legendary,Scout Rifle,KineticSlot,Range,10.0,True,18,502
-285,IKELOS_SG_v1.0.3,Legendary,Shotgun,Energy,Range,10.0,True,19,939
-287,IKELOS_SMG_v1.0.3,Legendary,Submachine Gun,Energy,Reload Speed,10.0,True,23,1460
-300,Tarnished Mettle,Legendary,Scout Rifle,Energy,Reload Speed,10.0,True,20,1861
 301,Dimensional Hypotrochoid,Legendary,Grenade Launcher,Power,,,True,16,408
-302,Firefright,Legendary,Auto Rifle,KineticSlot,Range,10.0,True,18,1029
 303,IKELOS_HC_v1.0.3,Legendary,Hand Cannon,Energy,Range,10.0,True,16,827
-304,Blood Feud,Legendary,Submachine Gun,KineticSlot,Range,10.0,True,20,539
 306,Likely Suspect,Legendary,Fusion Rifle,Energy,Reload Speed,10.0,True,16,1077
-307,Prodigal Return,Legendary,Grenade Launcher,Energy,Reload Speed,10.0,True,17,545
-308,Death's Razor,Legendary,Sword,Power,Impact,10.0,True,18,454
 313,Half-Truths,Legendary,Sword,Power,,,True,16,441
 315,Phyllotactic Spiral,Legendary,Pulse Rifle,Energy,,,True,10,432
 323,Until Its Return,Legendary,Shotgun,KineticSlot,Range,10.0,True,16,646
-324,Thin Precipice,Legendary,Sword,Power,Impact,10.0,True,19,412
-325,BxR-55 Battler,Legendary,Pulse Rifle,Energy,Reload Speed,10.0,True,19,948
-326,Retraced Path,Legendary,Trace Rifle,Energy,Range,10.0,True,21,714
-328,Perpetualis,Legendary,Auto Rifle,KineticSlot,Range,10.0,True,23,756
 329,Dead Man's Tale,Exotic,Scout Rifle,KineticSlot,,10.0,True,10,426
-332,Imperial Decree,Legendary,Shotgun,KineticSlot,Range,10.0,True,22,7
-333,Defiance of Yasmin,Legendary,Sniper Rifle,KineticSlot,Reload Speed,10.0,True,17,675
-334,Pardon Our Dust,Legendary,Grenade Launcher,KineticSlot,Handling,10.0,True,17,573
 335,Thoughtless,Legendary,Sniper Rifle,KineticSlot,Handling,10.0,True,16,367
-336,Volta Bracket,Legendary,Sniper Rifle,KineticSlot,Range,10.0,True,23,739
-337,No Reprieve,Legendary,Shotgun,KineticSlot,Stability,10.0,True,17,964
 338,Pointed Inquiry,Legendary,Scout Rifle,Energy,Handling,10.0,True,16,462
-339,Regnant,Legendary,Grenade Launcher,Power,Handling,10.0,True,17,415
 340,Father's Sins,Legendary,Sniper Rifle,Energy,Stability,10.0,True,16,729
 341,Under Your Skin,Legendary,Combat Bow,Energy,Stability,10.0,True,16,931
 342,Judgment of Kelgorath,Legendary,Glaive,Energy,Shield Duration,10.0,True,16,909
@@ -63,15 +24,10 @@
 350,Eleatic Principle,Legendary,Machine Gun,Power,,,True,5,109
 351,Kept Confidence,Legendary,Hand Cannon,KineticSlot,,,True,16,553
 352,Brya's Love,Legendary,Scout Rifle,Energy,,,True,11,836
-353,Semiotician,Legendary,Rocket Launcher,Power,,,True,18,212
 354,A Distant Pull,Legendary,Sniper Rifle,KineticSlot,,,True,1,1
 356,Wish-Keeper,Exotic,Combat Bow,KineticSlot,,10.0,True,10,667
-392,Sailspy Pitchglass,Legendary,Linear Fusion Rifle,Power,Reload Speed,10.0,True,37,848
-393,Retrofit Escapade,Legendary,Machine Gun,Power,Reload Speed,10.0,True,26,807
 394,Fel Taradiddle,Legendary,Combat Bow,KineticSlot,Draw Time,10.0,True,16,1027
-395,Rapacious Appetite,Legendary,Submachine Gun,KineticSlot,Stability,10.0,True,25,479
 396,Tripwire Canary,Legendary,Combat Bow,Energy,Draw Time,10.0,True,16,1107
-397,Syncopation-53,Legendary,Pulse Rifle,KineticSlot,Range,10.0,True,23,1866
 398,Path of Least Resistance,Legendary,Trace Rifle,Energy,Handling,10.0,True,16,932
 399,Targeted Redaction,Legendary,Hand Cannon,Energy,Range,10.0,True,16,749
 400,Drang (Baroque),Legendary,Sidearm,Energy,Range,10.0,True,16,1221
@@ -79,11 +35,7 @@
 405,Locus Locutus,Legendary,Sniper Rifle,KineticSlot,,,True,16,0
 406,The Supremacy,Legendary,Sniper Rifle,KineticSlot,,,True,13,217
 407,Different Times,Legendary,Pulse Rifle,KineticSlot,,,True,5,237
-421,Caretaker,Legendary,Sword,Power,Impact,10.0,True,20,403
-422,Raconteur,Legendary,Combat Bow,KineticSlot,Draw Time,10.0,True,17,650
-423,Bump in the Night,Legendary,Rocket Launcher,Power,Blast Radius,10.0,True,17,301
 424,Vexcalibur,Exotic,Glaive,Energy,"Range, Reload Speed",10.0,True,16,1240
-425,Royal Executioner,Legendary,Fusion Rifle,Energy,Reload Speed,10.0,True,17,600
 427,Doomed Petitioner,Legendary,Linear Fusion Rifle,Power,,,True,5,31
 448,Whisper of the Worm,Exotic,Sniper Rifle,Power,,10.0,True,1,10
 461,Adhortative,Legendary,Pulse Rifle,Energy,,,True,1,0
