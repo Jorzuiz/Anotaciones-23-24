@@ -86,7 +86,7 @@ la dependencia entres las múltiples variables puede usar diferentes escalas, im
 
 ## 2.2.2 Criterio de convergencia
 
-Se determina que hemos acabado cuando
+Se determina que hemos acabado cuandoo
 - El error baja de un numero determinado
 - El modelo no mejora más allá de un valor dado
 
