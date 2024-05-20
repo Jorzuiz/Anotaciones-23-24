@@ -3,26 +3,34 @@
 
 ## 1.1 Árboles binarios de búsqueda
 Conocemos, de la asignatura Estructuras de Datos y Algoritmos de segundo curso, que las operaciones de búsqueda, inserción o borrado en un árbol binario de búsqueda comparan un elemento con la raíz del árbol y van pasando, recursivamente, al hijo izquierdo o al hijo derecho, hasta encontrar en el árbol el elemento o llegar a un árbol vacío. Por tanto, estas operaciones tienen un coste en el caso peor proporcional a la altura del árbol. Si tenemos mala suerte, puede que la altura del árbol crezca en cada inserción, construyéndose un árbol degenerado que tiene una altura proporcional al número de nodos. 
-Video de Apuntes https://www.youtube.com/watch?v=ehj9Ns8ucKc
+
+- Video de Apuntes - https://www.youtube.com/watch?v=ehj9Ns8ucKc
+Busqueda: Linear en el peor caso, proporcional a la altura. Se recorre el árbol hasta encontrar el elemento o llegar a una hoja.
+Insercion: Igual que busqueda, puede modificar altura. 
+Eliminación: Lineal, proporcional a la altura. Se borra de diferentes maneras en base al tipo de nodo.
 
 Apuntes de ED
-Introduccion - https://www.youtube.com/watch?v=RDxSW4j3iGw&feature=youtu.be
-Insercion - https://www.youtube.com/watch?v=jqqeKBskGuw&feature=youtu.be
-Eliminación - https://www.youtube.com/watch?v=jClulLAZYcA&feature=youtu.be
+
+- Introduccion - https://www.youtube.com/watch?v=RDxSW4j3iGw&feature=youtu.be
+- Insercion - https://www.youtube.com/watch?v=jqqeKBskGuw&feature=youtu.be
+- Eliminación - https://www.youtube.com/watch?v=jClulLAZYcA&feature=youtu.be
 
 ## 1.2 Árboles AVL
 Los árboles AVL solucionan el problema con los costes en el caso peor cuando el árbol es degenerado, al mantener el árbol equilibrado: todos los nodos cumplen que la diferencia de alturas entre sus hijos es como mucho 1. Como consecuencia de esto, la altura del árbol es logarítmica respecto a su número de nodos, lo que hace que las operaciones de búsqueda, inserción y borrado (y otras, como calcular el menor elemento del árbol) tengan un coste en el caso peor proporcional al logaritmo del número de nodos, que está muy bien.
-Vídeo de apuntes - https://www.youtube.com/watch?v=ehj9Ns8ucKc
+
+- Vídeo de apuntes - https://www.youtube.com/watch?v=ehj9Ns8ucKc
+Un árbol AVL es un BST que mantiene diferencia de altura entre sus hijos de como mucho 1.
+La altura es proporcional al logaritmo del número de nodos. $Nodos(h)=Nodos(h-1)+Nodos(h-2)+1$ $Nodos(0)=0$ $Nodos(1)=1$
 
 ## 1.3 Implementación del TAD de los conjuntos mediante un árbol AVL
 Los árboles binarios de búsqueda son una muy buena opción para implementar el TAD de los conjuntos (con operaciones para añadir o eliminar elementos, y consultar si un elemento pertenece o no al conjunto) cuando además queremos poder recorrer los elementos del conjunto de manera ordenada, por ejemplo, de menor a mayor, o necesitamos otras operaciones que tengan que ver con el orden entre los elementos, como conocer el menor elemento del conjunto.
-Video de apuntes - https://www.youtube.com/watch?v=of1dbhM3hFU
+- Video de apuntes - https://www.youtube.com/watch?v=of1dbhM3hFU
 
 ## 1.4 Otros árboles autoequilibrados (opcional)
 Existen otros tipos de árboles de búsqueda que se mantienen equilibrados en el sentido de que su altura se mantiene siempre proporcional al logaritmo del número de nodos. Algunos de ellos son:
-Árboles rojinegros
-Árboles 2-3
-Árboles biselados
+- Árboles rojinegros - https://en.wikipedia.org/wiki/Red–black_tree
+- Árboles 2-3 - https://en.wikipedia.org/wiki/2–3_tree
+- Árboles biselados - https://en.wikipedia.org/wiki/Splay_tree
 
 ## Test de control y respuestas
 

@@ -1,13 +1,10 @@
 # 3 Heapsort y colas de prioridad con prioridades variables
-## 3.1 Heapsort
-Una posible forma de ordenar de menor a mayor los elementos de un vector consiste en insertar todos los elementos del vector en una cola de prioridad de mínimos y después ir extrayendo uno a uno los elementos de la cola para ir guardándolos de izquierda a derecha en el vector. Si el vector tiene N
- elementos, este método tiene una complejidad en tiempo en Θ(NlogN)
- y en espacio adicional en Θ(N)
- por el espacio necesario para almacenar el montículo utilizado en la implementación de la cola de prioridad.
+## 3.1 Heapsort (Algoritmo de ordenación)
+Una posible forma de ordenar de menor a mayor los elementos de un vector consiste en insertar todos los elementos del vector en una cola de prioridad de mínimos y después ir extrayendo uno a uno los elementos de la cola para ir guardándolos de izquierda a derecha en el vector. Si el vector tiene $N$ elementos, este método tiene una complejidad en tiempo en $Θ(NlogN)$ y en espacio adicional en $Θ(N)$ por el espacio necesario para almacenar el montículo utilizado en la implementación de la cola de prioridad.
 
 Podemos ahorrarnos el espacio adicional si el montículo se construye sobre el propio vector a ordenar. Primero los elementos se distribuyen para convertir el vector en un montículo y después se van extrayendo uno a uno colocándolos en la parte del vector que ya no es necesaria para almacenar el montículo, que va siendo cada vez más pequeño. El siguiente vídeo ilustra con detalle el proceso:
 
-https://www.youtube.com/watch?v=mqOIxe3ip0o
+- Video de apuntes - https://www.youtube.com/watch?v=mqOIxe3ip0o
 
 ## 3.2 Colas de prioridad con prioridades variables
 Hay aplicaciones donde interesa cambiar la prioridad de elementos que ya se encuentran en la cola de prioridad, de modo que estos ocupen su nueva posición atendiendo a la nueva prioridad. Eso ocurre, por ejemplo, en el algoritmo de Dijkstra para encontrar caminos de coste mínimo en un grafo dirigido valorado (que veremos más adelante).
@@ -16,20 +13,23 @@ Una forma cómoda de referirse a los elementos que pueden formar parte de la col
 
 El siguiente vídeo muestra cómo modificar la implementación mediante montículos de las colas de prioridad para obtener esta nueva funcionalidad:
 
-https://www.youtube.com/watch?v=dVwcKjXsqZc
+- Video de apuntes - https://www.youtube.com/watch?v=dVwcKjXsqZc
 
-## 3.3 Cuestionario repaso
+## Test Semana 3
 
 1. A la hora de convertir un vector en un montículo como primera fase para ordenarlo de menor a mayor por el método heapsort, ¿cuál es el caso peor (el caso que provoca que haya que hacer más trabajo)?
 >Cuando el vector inicial está ordenado de menor a mayor.
+
 Para ordenar de menor a mayor el vector tiene que convertirse en un montículo de máximos. El caso peor se da cuando el vector está inicialmente ordenado de menor a mayor porque cada elemento (en la primera mitad del vector) es menor que todos los siguientes y tiene que ser hundido hasta una hoja.
 
 2. Si se hace de forma eficiente, ¿cuál es la complejidad de convertir un vector de $N$ elementos en un montículo en el caso peor?
 >$O(N)$
+
 Si se recorre la primera mitad de los elementos del vector de derecha a izquierda y cada elemento se hunde entre los siguientes la complejidad total está en $O(N)$
 
 3. Si se hace de forma eficiente, ¿cuál es la complejidad en espacio adicional del algoritmo heapsort para ordenar un vector de $N$ elementos? 
 >$O(1)$
+
 Se puede recorrer la primera mitad de los elementos del vector de derecha a izquierda hundiendo cada elemento entre los siguientes, y haciendo todas las transformaciones sobre el propio vector, por lo que la complejidad en espacio adicional está en $O(1)$
 
 4. La función
@@ -40,7 +40,8 @@ Se puede recorrer la primera mitad de los elementos del vector de derecha a izqu
       }
    }
 ```
->Mueve los elementos del vector pero no lo convierte necesariamente en eun montículo. 
+>Mueve los elementos del vector pero no lo convierte necesariamente en eun montículo.
+
 Un vector puede convertirse en un montículo de dos maneras distintas:
 >* Recorriendo los elementos de izquierda a derecha y flotando cada elemento entre los anteriores (ya procesados), o
 >* Recorriendo la primera mitad de los elementos de derecha a izquierda, hundiendo cada elemento entre los siguientes, que ya forman montículos.
@@ -54,6 +55,7 @@ Aquí se han mezclado las dos ideas, lo que no garantiza que el resultado final 
 
 7. En las colas de prioridad con prioridades variables, cambiar la prioridad de un elemento que se encuentra en una cola con $N$ elementos tiene un coste en
 >$O(log N)$
+
 Al cambiar la prioridad de un elemento este tiene que ser flotado o hundido en el caso peor un número de veces igual a la altura del montículo, que es logarítmica respecto al número de nodos.
 
 8. Cuando en un montículo de mínimos cambiamos la prioridad de un elemento a un valor menor, el elemento tiene que ser flotado (intercambiado con su padre mientras este sea mayor).
