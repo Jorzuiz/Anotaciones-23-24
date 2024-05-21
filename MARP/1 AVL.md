@@ -12,20 +12,37 @@ Conocemos, de la asignatura Estructuras de Datos y Algoritmos de segundo curso, 
 
 - Video [Repaso ABB y costes](https://www.youtube.com/watch?v=ehj9Ns8ucKc)
 
-:godmode: Busqueda: Linear en el peor caso, proporcional a la altura. Se recorre el árbol hasta encontrar el elemento o llegar a una hoja.
-> Insercion: Igual que busqueda, puede modificar altura. 
-> Eliminación: Lineal, proporcional a la altura. Se borra de diferentes maneras en base al tipo de nodo.
+> :godmode: Busqueda: Linear en el peor caso, proporcional a la altura. Se recorre el árbol hasta encontrar el elemento o llegar a una hoja.
+
+> :shipit: Insercion: Igual que busqueda, puede modificar altura.
+
+> :suspect: Eliminación: Lineal, proporcional a la altura. Se borra de diferentes maneras en base al tipo de nodo.
 
 Apuntes de ED
 
-- Introduccion - https://www.youtube.com/watch?v=RDxSW4j3iGw&feature=youtu.be
-- Insercion - https://www.youtube.com/watch?v=jqqeKBskGuw&feature=youtu.be
-- Eliminación - https://www.youtube.com/watch?v=jClulLAZYcA&feature=youtu.be
+- [Introduccion ABB](https://www.youtube.com/watch?v=RDxSW4j3iGw)
+- [Insercion ABB](https://www.youtube.com/watch?v=jqqeKBskGuw)
+- [Eliminación](https://www.youtube.com/watch?v=jClulLAZYcA)
 
 ## 1.2 Árboles AVL
+
 Los árboles AVL solucionan el problema con los costes en el caso peor cuando el árbol es degenerado, al mantener el árbol equilibrado: todos los nodos cumplen que la diferencia de alturas entre sus hijos es como mucho 1. Como consecuencia de esto, la altura del árbol es logarítmica respecto a su número de nodos, lo que hace que las operaciones de búsqueda, inserción y borrado (y otras, como calcular el menor elemento del árbol) tengan un coste en el caso peor proporcional al logaritmo del número de nodos, que está muy bien.
 
-- Vídeo de apuntes - https://www.youtube.com/watch?v=ehj9Ns8ucKc
+En el siguiente vídeo se presentan los árboles AVL y cómo se logra de forma eficiente que se mantengan equilibrados, pese a que las operaciones de inserción o borrado modifiquen las alturas de los subárboles, mediante lo que se conoce como rotaciones:
+
+- Vídeo [Árboles AVL](https://www.youtube.com/watch?v=ehj9Ns8ucKc)
+
+>Para practicar las rotaciones, comienza con un árbol vacío, y ves insertando uno a uno los siguientes elementos, dibujando el árbol tras cada inserción:
+> - el 3, el 2 y el 1;
+> - después los valores del 4 al 7, en ese orden;
+> - después los valores del 10 al 16, en orden inverso (16, 15, 14...);
+> - y por último los valores 8 y 9.
+
+> [Simulador visual árboles AVL](https://www.cs.usfca.edu/~galles/visualization/AVLtree.html)
+
+>El problema 1  ¿Es un árbol AVL? del juez automático consiste en, dado un árbol binario de enteros, averiguar si es AVL o no, es decir, si cumple que es un árbol binario de búsqueda y está equilibrado. No es obligatorio, pero el problema puede resolverse con una función que recorra una única vez el árbol. En la entrada cada caso consiste en la descripción de un árbol binario, con la que tendrás que construir un objeto, utilizando la clase BinTree, por ejemplo (o la que usaras en segundo).
+
+
 Un árbol AVL es un BST que mantiene diferencia de altura entre sus hijos de como mucho 1.
 La altura es proporcional al logaritmo del número de nodos. $Nodos(h)=Nodos(h-1)+Nodos(h-2)+1$ $Nodos(0)=0$ $Nodos(1)=1$
 
