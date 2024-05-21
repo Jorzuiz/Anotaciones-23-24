@@ -1,13 +1,20 @@
-# Arboles de Búsqueda Avanzados
+# 1 Árboles de búsqueda avanzados
 
+Objetivos:
 
-## 1.1 Árboles binarios de búsqueda
-Conocemos, de la asignatura Estructuras de Datos y Algoritmos de segundo curso, que las operaciones de búsqueda, inserción o borrado en un árbol binario de búsqueda comparan un elemento con la raíz del árbol y van pasando, recursivamente, al hijo izquierdo o al hijo derecho, hasta encontrar en el árbol el elemento o llegar a un árbol vacío. Por tanto, estas operaciones tienen un coste en el caso peor proporcional a la altura del árbol. Si tenemos mala suerte, puede que la altura del árbol crezca en cada inserción, construyéndose un árbol degenerado que tiene una altura proporcional al número de nodos. 
+- Reconocer el problema de coste en el caso peor de las operaciones de los árboles binarios de búsqueda, cuando estos son degenerados.
+- Conocer los árboles AVL (árboles binarios de búsqueda autoequilibrados) y sus ventajas.
+- Utilizar los AVL para implementar de forma eficiente el TAD de los conjuntos (de elementos ordenables).
 
-- Video de Apuntes - https://www.youtube.com/watch?v=ehj9Ns8ucKc
-Busqueda: Linear en el peor caso, proporcional a la altura. Se recorre el árbol hasta encontrar el elemento o llegar a una hoja.
-Insercion: Igual que busqueda, puede modificar altura. 
-Eliminación: Lineal, proporcional a la altura. Se borra de diferentes maneras en base al tipo de nodo.
+## 1.1 Árboles Binarios de Búsqueda (BST)
+
+Conocemos, de la asignatura Estructuras de Datos y Algoritmos de segundo curso, que las operaciones de búsqueda, inserción o borrado en un árbol binario de búsqueda comparan un elemento con la raíz del árbol y van pasando, recursivamente, al hijo izquierdo o al hijo derecho, hasta encontrar en el árbol el elemento o llegar a un árbol vacío. Por tanto, estas operaciones tienen un coste en el caso peor proporcional a la altura del árbol. Si tenemos mala suerte, puede que la altura del árbol crezca en cada inserción, construyéndose un árbol degenerado que tiene una altura proporcional al número de nodos.
+
+- Video [Repaso ABB y costes](https://www.youtube.com/watch?v=ehj9Ns8ucKc)
+
+:godmode: Busqueda: Linear en el peor caso, proporcional a la altura. Se recorre el árbol hasta encontrar el elemento o llegar a una hoja.
+> Insercion: Igual que busqueda, puede modificar altura. 
+> Eliminación: Lineal, proporcional a la altura. Se borra de diferentes maneras en base al tipo de nodo.
 
 Apuntes de ED
 
