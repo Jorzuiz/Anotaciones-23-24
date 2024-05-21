@@ -1,10 +1,15 @@
 # 3 Heapsort y colas de prioridad con prioridades variables
 ## 3.1 Heapsort (Algoritmo de ordenación)
-Una posible forma de ordenar de menor a mayor los elementos de un vector consiste en insertar todos los elementos del vector en una cola de prioridad de mínimos y después ir extrayendo uno a uno los elementos de la cola para ir guardándolos de izquierda a derecha en el vector. Si el vector tiene $N$ elementos, este método tiene una complejidad en tiempo en $Θ(NlogN)$ y en espacio adicional en $Θ(N)$ por el espacio necesario para almacenar el montículo utilizado en la implementación de la cola de prioridad.
+Una posible forma de ordenar de menor a mayor los elementos de un vector consiste en insertar todos los elementos del vector en una cola de prioridad de mínimos y después ir extrayendo uno a uno los elementos de la cola para ir guardándolos de izquierda a derecha en el vector. Si el vector tiene $N$ elementos, este método tiene una complejidad en tiempo en $O(N\:logN)$ y en espacio adicional en $O(N)$ por el espacio necesario para almacenar el montículo utilizado en la implementación de la cola de prioridad.
 
 Podemos ahorrarnos el espacio adicional si el montículo se construye sobre el propio vector a ordenar. Primero los elementos se distribuyen para convertir el vector en un montículo y después se van extrayendo uno a uno colocándolos en la parte del vector que ya no es necesaria para almacenar el montículo, que va siendo cada vez más pequeño. El siguiente vídeo ilustra con detalle el proceso:
 
 - Video de apuntes - https://www.youtube.com/watch?v=mqOIxe3ip0o
+
+>Heapsort es un algoritmo de ordenación, usa las características del heap asique no usa memoria adicional. Usa swaps para poner el máximo al final e irlo reduciendo hasta quedarse con ele elemento más chiquito. Resulta en un array ordenado.
+
+>Técincamente el heap es un árbol, asique la busqueda de elemento mayor es $O(log N)$ y se realiza $N$ veces. Total de $O(N\:logN)$
+
 
 ## 3.2 Colas de prioridad con prioridades variables
 Hay aplicaciones donde interesa cambiar la prioridad de elementos que ya se encuentran en la cola de prioridad, de modo que estos ocupen su nueva posición atendiendo a la nueva prioridad. Eso ocurre, por ejemplo, en el algoritmo de Dijkstra para encontrar caminos de coste mínimo en un grafo dirigido valorado (que veremos más adelante).

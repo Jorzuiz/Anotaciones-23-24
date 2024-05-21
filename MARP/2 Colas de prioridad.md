@@ -5,6 +5,9 @@ En las colas FIFO (estudiadas en Estructuras de Datos) los elementos salen de la
 
 Para que podamos conocer, dados dos elementos, cuál es el más prioritario, utilizamos una relación de orden total, <. En las colas de prioridad de mínimos, el elemento más prioritario es el menor, y en las colas de prioridad de máximos, el elemento más prioritario es el mayor.
 
+>Se suelen usar en algoritmos de bíusqueda de camino más corto, Dijkstra o Priority Queues
+
+
 - Video de apuntes - https://www.youtube.com/watch?v=mvaLy_ta3Qw&feature=youtu.be
 
 ## 2.2 Montículos binarios
