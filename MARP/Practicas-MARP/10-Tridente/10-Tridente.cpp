@@ -15,6 +15,10 @@
 #include <fstream>
 #include <algorithm>
 #include "..\indexPQ.h"
+#include <string>
+
+
+
 using namespace std;
 
 

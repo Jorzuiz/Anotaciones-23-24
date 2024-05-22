@@ -9,17 +9,20 @@ En el directorio ejercicio1 de los ficheros para la práctica ( ficheros_p1.tar.
 Para cada directorio se proporciona una serie de tareas y preguntas que deberás responder, para las cuales tendrás que examinar y probar los ejemplos proporcionados. Consulta el manual del entorno para saber como utilizar el compilador. Puedes utilizar VSCode como editor.
 
 ## 1. Compilación
+
 * Compila el código del ejercicio y ejecútalo
 * Obtén la salida de la etapa de pre-procesado (opción -E o la opción --save-temps para obtener la salida de todas las etapas intermedias) y en un fichero hello2.i
 
-* ¿Qué ha ocurrido con la “llamada a min()” en hello2.i? 
-    - Se ha sustituido por el contenido de la macro 
+* ¿Qué ha ocurrido con la “llamada a min()” en hello2.i?
+
+    - Se ha sustituido por el contenido de la macro
 
 * ¿Qué efecto ha tenido la directiva #include <stdio.h>?
+
     - La inclusion del contenido de <stdio.h> así como sus dependencias
 
-
 ## 2. Herramienta make
+
 * Examina el makefile, identifica las variables definidas, los objetivos (targets) y las regalas. Ejecuta make en la linea de comandos y comprueba las ordenes que ejecuta para construir el proyecto.
 
 * Marca el fichero aux.c como modificado ejecutando touch aux.c. Después ejecuta de nuevo make. ¿Qué diferencia hay con la primera vez que lo ejecutaste? ¿Por qué?
