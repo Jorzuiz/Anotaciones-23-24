@@ -10,7 +10,7 @@ Objetivos:
 
 ## 4.1 Grafos no dirigidos
 Los grafos son una herramienta para modelar problemas en los que tenemos elementos, representados por vértices en el grafo, y conexiones uno a uno entre ellos, representadas por las aristas. Los grafos pueden ser dirigidos (cuando las aristas están orientadas) o no, y pueden ser valorados (cuando las aristas tienen asociado un valor) o no. Esta semana nos centramos en los grafos no dirigidos y no valorados.
-![alt text](.\Assets\grafoNoDirigido.png)
+![alt text](/MARP/Assets/grafoNoDirigido.png)
 
 El siguiente vídeo presenta los grafos no dirigidos y cómo pueden representarse en memoria con el objetivo de poder resolver eficientemente problemas de procesamiento de grafos:
 
@@ -48,7 +48,7 @@ El recorrido en anchura de un grafo desde un vértice origen también lo explora
 - Video apuntes - https://www.youtube.com/watch?v=bcTsV94Lg1I
 
 La página web [The Oracle of Bacon](https://oracleofbacon.org/) contiene un juego que consiste en comenzar con un actor o actriz y conectarlo con Kevin Bacon en el menor número de pasos. Dos actores están conectados directamente si han participado en la misma película. El menor número de películas por las que hay que pasar para conectar a un actor con Kevin Bacon se conoce como el número de Bacon de ese actor. Por ejemplo, Woody Allen tiene un número de Bacon de 2, como muestra la siguiente imagen:
-![Alt text](.\Assets\recorridoAnchura.png)
+![Alt text](/MARP/Assets/recorridoAnchura.png)
 
 De hecho el grafo es un grafo bipartito, donde los vértices representan actores (o actrices) o películas. Cada actor está conectado mediante aristas con todas las películas en las que ha participado (por lo que no hay aristas entre actores o entre películas, lo que hace que el grafo sea bipartito). Para encontrar el número de Bacon de un actor obviamente hay que realizar un recorrido en anchura. Actualmente el grafo tiene unas 128.000 películas y unos 358.000 actores o actrices. ¡Y es difícil encontrar actores que tengan un número de Bacon mayor que 3!
 
@@ -134,7 +134,7 @@ ellos.
 
 Un grafo es un conjunto de vértices y un conjunto de aristas que conectan pares de vértices.
 
-![Alt text](.\Assets\diaposGrafosNoDirigidos1.png)
+![Alt text](/MARP/Assets/diaposGrafosNoDirigidos1.png)
 
 |problema|descripción|
 |---|---|
@@ -152,7 +152,7 @@ siempre conecten vértices en conjuntos distintos?|
 En general, los nombres de los vértices no son importantes, pero hay que distinguirlos. Los numeramos de 0 a V – 1
 Un dibujo del grafo nos da intuición sobre su estructura, pero a veces confunde.
 
-![Alt text](.\Assets\diaposGrafosNoDirigidos2.png)
+![Alt text](/MARP/Assets/diaposGrafosNoDirigidos2.png)
 
 El TAD de los grafos cuenta con las siguientes operaciones:
 
@@ -181,7 +181,7 @@ int aristas(Grafo const& g) {
 Los grafos se pueden implementar de varias maneras:
 1. Matrid de adyacencia por booleanos
 
-![Alt text](.\Assets\diaposGrafosNoDirigidos3.png)
+![Alt text](/MARP/Assets/diaposGrafosNoDirigidos3.png)
 
 Usa una tabla para consultar con valores true/false las conexiones, la tabla es simétrica diagonalmente y aunque 
 
@@ -194,7 +194,7 @@ int aristas(Grafo const& g);        // O(V²)
 
 Un vector guarda vectores que contienen cada una una lista de conexiones a los otros nodos
 
-![Alt text](.\Assets\diaposGrafosNoDirigidos4.png)
+![Alt text](/MARP/Assets/diaposGrafosNoDirigidos4.png)
 
 ```c++
 int grado(Grafo const& g, int v);   // O(V)
@@ -203,7 +203,7 @@ int aristas(Grafo const& g);        // O(V+A)
 
 En la práctica se usan listas adyacentes y pueden llegar a ser dispersos
 
-![Alt text](.\Assets\diaposGrafosNoDirigidos5.png)
+![Alt text](/MARP/Assets/diaposGrafosNoDirigidos5.png)
 
 |representación|espacio|añadir arista v-w|comprobar si v y w son adyacentes|recorrer los vñertices adyacentes a v|
 |---|---|---|---|---|
@@ -267,7 +267,7 @@ void resuelve(Grafo const& g, int s) {
 
 Un grafo puede ser no conexo si su recorrido está separado
 
-![Alt text](.\Assets\diaposGrafosNoDirigidos6.png)
+![Alt text](/MARP/Assets/diaposGrafosNoDirigidos6.png)
 
 ## Recorridos en Profundidad
 

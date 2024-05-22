@@ -37,7 +37,7 @@ Dado un grafo no dirigido conexo, un árbol de recubrimiento suyo es un subgrafo
 Si el grafo es valorado, tiene sentido preguntarse por un árbol de recubrimiento de coste mínimo suyo, es decir, uno tal que no existe otro con coste menor, donde el coste del árbol de recubrimiento es la suma de los valores de las aristas.
 
 La siguiente figura muestra un grafo valorado donde se han resaltado las aristas que forman un árbol de recubrimiento de coste mínimo:
-![alt text](.\Assets\ArbolRecMinimo.png)
+![alt text](/MARP/Assets/ArbolRecMinimo.png)
 
 El siguiente vídeo muestra cómo se puede resolver este problema de forma eficiente utilizando el algoritmo de Kruskal:
 
@@ -57,7 +57,7 @@ Al haber compresión de caminos, al buscar un elemento este termina estando en l
 
 3. Considera el siguiente grafo no dirigido y valorado,
 
-![alt text](.\Assets\testConjuntoDisjunto1.png)
+![alt text](/MARP/Assets/testConjuntoDisjunto1.png)
 
 El algoritmo de Kruskal considera las aristas de menor a mayor coste, y selecciona aquellas que al unirlas a las ya seleccionadas no crean ciclos. Las aristas se añaden al ARM en este orden: 10 20 40 60 80 90.
 
@@ -79,13 +79,13 @@ Si los tamaños de los árboles se tienen en cuenta al unirlos, la altura máxim
 
 Falso. Solamente si el coste de todas las aristas es distinto está garantizado que el ARM es único. Con costes repetidos puede haber varios ARMs distintos, como ocurre con este grafo
 
-![alt text](.\Assets\testConjuntoDisjunto2.png)
+![alt text](/MARP/Assets/testConjuntoDisjunto2.png)
 
 que tiene 3 ARM distintos, según quitemos una cualquiera de sus aristas.
 
 8. Sea $G$ un grafo no dirigido con valores de las aristas enteros positivos distintos. Su ARM aparece marcado en rojo en la imagen. ¿Cuál es la mínima suma posible del valor del resto de aristas (las marcadas con ?)?
 
-![alt text](.\Assets\testConjuntoDisjunto3.png)
+![alt text](/MARP/Assets/testConjuntoDisjunto3.png)
 
 La arista $0-2$ tiene que tener un valor mayor o igual que 10, ya que si no el vértice 0 se podría unir al resto mediante esta arista en vez de la arista $0-1$. La arista $1-3$ tiene que tener un valor mayor o igual que $16$, porque si no se podría usar en vez de la arista $2-4$ para conectar las partes izquierda y derecha del grafo. Y la arista $4-3$ tiene que tener un valor mayor o igual que 7 porque si no podría utilizarse para unir el vértice 3 al ARM, en vez de la arista $3-5$. La suma mínima posible es por tanto $10+16+7=33$.
 
@@ -94,6 +94,6 @@ La arista $0-2$ tiene que tener un valor mayor o igual que 10, ya que si no el v
 Verdadero. Se puede cambiar de signo a todas las aristas y aplicar directamente el algoritmo o considerar las aristas de mayor a menor coste.
 
 10. ¿Cuántos árboles de recubrimiento mínimo distintos tiene el siguiente grafo valorado?
-![alt text](.\Assets\testConjuntoDisjunto4.png)
+![alt text](/MARP/Assets/testConjuntoDisjunto4.png)
 El grafo tiene 6 posibles ARM distintos. Las aristas con coste 1 son todas necesarias, así como la arista de coste 2 que no aparece dentro de ningún círculo en el siguiente dibujo
-![alt text](.\Assets\testConjuntoDisjunto5.png)
+![alt text](/MARP/Assets/testConjuntoDisjunto5.png)

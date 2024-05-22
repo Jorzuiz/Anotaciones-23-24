@@ -36,13 +36,13 @@ Cada nuevo elemento que se inserta es menor que todos los que ya hay en el mont�
 
 3. En este montículo de mínimos 9, 11 y 12 han sido los últimos en insertarse.
 
-![alt text](.\Assets\TestMonticulos1.png)
+![alt text](/MARP/Assets/TestMonticulos1.png)
 
 El último elemento insertado se añadió en la hoja más a la derecha del último nivel y después fue flotado si hacía falta hacía la raíz. Puede haber sido el 12 y no haber necesitado ser flotado. Puede ser el 11 y haberse intercambiado con el 12, que ocupaba su posición. Y puede haber sido el 9, habiendo sido flotado dos niveles. En cambio, no puede ser el 2, porque en ese caso el 9 ocuparía su lugar antes de la inserción, y eso no es posible porque el 9 no puede ser el padre del 4 en un montículo de mínimos.
 
 4. La eliminación del máximo(26) en el siguiente montículo de máximos de la izquierda da como resultado el montículo de la derecha:
 
-![alt text](.\Assets\testMonticulos2.png)
+![alt text](/MARP/Assets/testMonticulos2.png)
 
 El valor oculto puede ser 9,10 o 13. Por ser hijo del 14 antes de la eliminación sabemos que tiene que ser menor que 14. Por ser padre del 8, tiene que ser mayor que 8. Como el 11 y el 12 ya están, solamente puede ser 9, 10 o 13.
 
@@ -56,20 +56,20 @@ Para eliminar el elemento más prioritario la raíz del árbol se sustituye por 
 
 7. Este vector se representa con el siguiente montículo de máximos.
 
-![alt text](.\Assets\testMonticulos3.png)
-![alt text](.\Assets\testMonticulos4.png)
+![alt text](/MARP/Assets/testMonticulos3.png)
+![alt text](/MARP/Assets/testMonticulos4.png)
 
 La raíz está en la posición 1, y el nodo de la posición $i$ tiene su hijo izquierdo en la posición $2i$ y su hijo derecho en la posición , si estos números no exceden 𝑛𝑢𝑚𝐸𝑙𝑒𝑚𝑠. Todo nodo cumple que es mayor (o igual) que sus hijos, si estos existen.
 
 8. En este monticulo de máximos elúltimo en haberse introducido puede haber sido el 10 o el 9.
 
-![alt text](.\Assets\testMonticulos5.png)
+![alt text](/MARP/Assets/testMonticulos5.png)
 
 El último elemento insertado se añadió en la hoja más a la derecha del último nivel y después fue flotado si hacía falta hacía la raíz. Puede haber sido el 9 y no haber necesitado ser flotado. Puede haber sido el 10 y haberse intercambiado con el 9, que ocupaba su posición. Pero no puede ser el 19, porque entonces el 10 ocuparía su posición antes de la última inserción, y el 10 no puede ser padre del 13 en un montículo de máximos. Por el mismo motivo no puede ser el 25 el último elemento insertado.
 
 9. Este vector representa un montículo de mínimos
 
-![alt text](.\Assets\testMonticulos6.png)
+![alt text](/MARP/Assets/testMonticulos6.png)
 Visto como árbol semicompleto (en realidad, completo), todo nodo cumple que es mayor (o igual) que su padre. El padre del nodo en la posición $i(i>1)$ está en la posición $i/2$.
 
 10. El recorrido por niveles (o en anchura) de un montículo de mínimos **NO** produce una sencuencia de creciente de valores.

@@ -10,7 +10,7 @@ Objetivos:
 
 Hay ocasiones donde es necesario orientar las aristas para poder modelar correctamente una aplicación. Por ejemplo, podemos representar la web con un grafo, donde cada página web es un vértice, y hay una arista entre una página, representada por el vértice v, y otra, representada por w, si la primera contiene un enlace a la segunda. Probablemente la segunda página no contenga un enlace a la primera (por lo que la relación entre ambas no es simétrica). Ese hecho queda bien reflejado si utilizamos una arista dirigida, v → w, que va de v a w. Así surgen los grafos dirigidos o digrafos.
 
-![alt text](.\Assets\grafoDirigido1.png)
+![alt text](/MARP/Assets/grafoDirigido1.png)
 
 Algunos de los conceptos de grafos que vimos para grafos no dirigidos siguen sirviendo, o se adaptan a su versión dirigida. Así hablaremos de caminos dirigidos o ciclos dirigidos.  Y también surgen otros conceptos nuevos, como el de ordenación topológica que vamos a estudiar.
 
@@ -22,7 +22,7 @@ Código fuente: [Digrafo.h](https://github.com/Jorzuiz/Anotaciones-23-24/blob/ma
 
 > El problema de los caminos mínimos desde múltiples orígenes consiste en, dado un grafo dirigido y un conjunto de vértices origen, encontrar el camino más corto (con menos aristas) desde cualquiera de los orígenes al resto de vértices. Por ejemplo, en el siguiente grafo
 
-![alt text](.\Assets\grafoDirigido2.png)
+![alt text](/MARP/Assets/grafoDirigido2.png)
 
 > si los vértices origen son { 0, 2, 7 }, al vértice 8 llegaríamos desde el 0 por un camino de longitud 1, pero al vértice 6 llegaríamos desde el 2 por un camino de longitud 2. ¿Qué algoritmo utilizarías para encontrar el mejor camino desde cualquiera de los vértices origen?
 
@@ -43,7 +43,7 @@ El siguiente vídeo muestra cómo se puede calcular una posible ordenación topo
 ## 5.3 Detección de ciclos
 Saber si un grafo dirigido tiene ciclos o no es interesante en muchas situaciones. ¿Tiene ciclos el siguiente grafo?
 
-![alt text](.\Assets\grafoDirigido3.png)
+![alt text](/MARP/Assets/grafoDirigido3.png)
 
 Para un algoritmo basado en un recorrido en profundidad la tarea de detectar ciclos es mucho más sencilla. 
 
@@ -58,7 +58,7 @@ El siguiente vídeo muestra algunas aplicaciones donde es interesante poder dete
 Verdadero. Podemos empezar por cualquiera siempre y cuando pasemos por todos los vértices del grafo dirigido.
 
 2. Dado el siguiente grafo dirigido,
-![alt text](.\Assets\testGrafoDirigido1.png)
+![alt text](/MARP/Assets/testGrafoDirigido1.png)
 El grafo es acíclico y por tanto su postorden inverso (3 4 0 1 2 7 5 6 8) es una ordenación topológica válida.
 
 3. El complementario de un grafo $G=(V,A)$ es otro grafo $G^c=(V,A^c)$ donde $A^c=\{(u,v)\:|(u,v)\notin A,u\neq v\}$
@@ -69,7 +69,7 @@ Para calcular la lista de adyacentes asociada al vértice $u$ en el grafo $G^c$ 
 $V$, por ejemplo). Como hay $V$ vértices, el coste total está en $O(V^2)$.
 
 4. Dado el siguiente grafo dirigido,
-![alt text](.\Assets\testGrafoDirigido2.png)
+![alt text](/MARP/Assets/testGrafoDirigido2.png)
 
 El grafo tiene ciclos por lo que no existe ninguna ordenación topológica de sus vértices.
 
@@ -98,7 +98,7 @@ Si el grafo no tiene aristas todas las posibles ordenaciones de sus vértices so
 
 9. ¿En qué orden se visitarían los vértices de este grafo dirigido si realizamos un recorrido en profundidad del grafo completo? Escribe los identificadores de los vértices separados por espacios en el orden en que son visitados. Supón que los vértices en las listas de adyacentes están ordenados de menor a mayor, y que los vértices iniciales que hagan falta también se prueban en orden.
 
-![alt text](.\Assets\testGrafoDirigido4.png)
+![alt text](/MARP/Assets/testGrafoDirigido4.png)
 
 Los vértices se recorren en este orden: 0 3 2 7 1 4 6 5.
 
