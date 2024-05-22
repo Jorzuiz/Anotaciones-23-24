@@ -103,7 +103,7 @@ Si se inserta un valor $n$<26, el nuevo nodo se colocará como hijo del nodo 9 y
 
 8. Si al insertar consecutivamente los elementos 4 y 12 en el siguiente árbol AVL no se ha realizado ninguna rotación su valor es como mínimo 5
 
-![alt text](.\Assets\testAVL10.png)
+![alt text](/Assets/testAVL10.png)
 
 Como los valores a insertar (4 y 12) son menores que 19, tendrán que colocarse necesariamente como descendientes del nodo x. En función del orden relativo de x, 4 y 12 se dan tres situaciones posibles:
 
