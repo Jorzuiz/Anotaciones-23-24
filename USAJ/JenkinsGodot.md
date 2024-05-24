@@ -3,7 +3,7 @@
 Se plantea una herramienta de integración continua para Godot usando Jenkins.
 Se configurará una plantilla de ejemplo en godot para al menos una plataforma. La integración continua se implementará usando Jenkins. Jenkins corre como proceso local y mediante plugins realiza acciones. Jenkins correrá en una red local, dos ordenadores conectados al mismo router.
 
-> Godot Engine 4.2.2
+## Godot Engine 4.2.2
 
 - Godot corre en un ejecutable autocontenido (Open Source, no requiere instalación)
 - Existe ejecutable para version GUI  y para version consola de comandos (headless en modo consola)
@@ -14,7 +14,7 @@ Se configurará una plantilla de ejemplo en godot para al menos una plataforma. 
 - El repo estará en GitHub (Microsoft)
 - El git es preferible para equipos pequeños con mucha responsabilidad, descarga el repo entero
 
-> Jenkins 2452.1
+## Jenkins 2452.1
 
 - Podría tirar en Gitub Actions pero no es nuestro (Microsoft)
 - La automatizacion va por Jenkins, primer paso para montar ecosistema propio (Open Source)
