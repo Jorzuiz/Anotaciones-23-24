@@ -1,38 +1,50 @@
 # Continuous Integration tool for Godot using Jenkins
 
 Se plantea una herramienta de integración continua para Godot usando Jenkins.
-Se configurará una plantilla de ejemplo en godot para al menos una plataforma. La integración continua se implementará usando Jenkins. Jenkins corre como proceso local y mediante plugins realiza acciones. Jenkins correrá en una red local, dos ordenadores conectados al mismo router.
+Se configurará una plantilla de ejemplo en Godot para al menos una plataforma. La integración continua se implementará usando Jenkins. Jenkins corre como proceso local y mediante plugins realiza acciones. Jenkins correrá en una red local, dos ordenadores conectados al mismo router.
 
 ## Godot Engine 4.2.2
+<<<<<<< Updated upstream
+=======
+
+Motor de código abierto. Nacido en 2001 como codigo cerrado pero usado desde 2014 para hacer juegos. Notables ejemplos en la saga Deponia, Sonic Colors y el próximo Slay The Spire 2.
+>>>>>>> Stashed changes
 
 - Godot corre en un ejecutable autocontenido (Open Source, no requiere instalación)
 - Existe ejecutable para version GUI  y para version consola de comandos (headless en modo consola)
 - Godot crea un proyecto llamado template, este se modifica con el ejecutable (Tanto consola como GUI)
 - El template puede ser compilado/construido de diferentes formas/maneras para diversas plataformas
-- La informacion de build de template tiene que settearse inicialmente/de manera manual antes de llamar a la build
-
-- El repo estará en GitHub (Microsoft)
-- El git es preferible para equipos pequeños con mucha responsabilidad, descarga el repo entero
+- La informacion de build de template tiene que settearse inicialmente/de manera manual antes de llamar a la build, requiere de una descarga
 
 ## Jenkins 2452.1
 
-- Podría tirar en Gitub Actions pero no es nuestro (Microsoft)
+<<<<<<< Updated upstream
+## Jenkins 2452.1
+=======
+Se usa en la industria por ser de código abierto y permitir automatización en múltiples sistemas de control de versiones mediante los plugins de la comunidad.
+>>>>>>> Stashed changes
+
+- El repo podría tirar en Gitub Actions pero no es nuestro (Microsoft)
 - La automatizacion va por Jenkins, primer paso para montar ecosistema propio (Open Source)
 - Jenkins necesita correr en un servidor, este puede ser propio (controlamos los datos)
 - Jenkins usa lenguaje de scripting, groovy, con sintaxis de Java
-- Compatible con centenaroes de plugins, uno de ellos Github
-- El plugin de jenkins desencadena los jobs que configuremos
+- Compatible con centenares de plugins, uno de ellos Github
+- El pipeline de jenkins desencadena los jobs que configuremos
 
-## Jenkins - Automatization Tool
+> Jenkins - Documentación inicial
 
-- https://stackoverflow.com/questions/63410442/jenkins-installation-windows-10-service-logon-credentials
+- [Configuracion inicial](https://stackoverflow.com/questions/63410442/jenkins-installation-windows-10-service-logon-credentials)
+- [Deteccion de commits API de github](https://plugins.jenkins.io/github-api/)
+- [Configuracion plugin Github](https://plugins.jenkins.io/git/#plugin-content-configuration)
+- [Pipelines de Jenkins](https://www.jenkins.io/doc/book/pipeline/getting-started/)
 
-## Godot Engine - Open Source game engine
+> Godot Engine - Documentación inicial
 
 - [Exportar plantillas](https://docs.godotengine.org/en/stable/tutorials/export/exporting_projects.html)  ==Incluye codificación para el exe==
 - [Video build desde CMD](https://www.youtube.com/watch?v=qXBVrM9BHcQ)
 - [Correr Godot desde Linea de Comandos](https://docs.godotengine.org/en/stable/tutorials/editor/command_line_tutorial.html)
-- [Build desde linea de comandos en GitHub](https://github.com/slapin/godot-templates-build/blob/master/Jenkinsfile)
+- [Build desde linea de comandos](https://github.com/slapin/godot-templates-build/blob/master/Jenkinsfile)
+
 
 |Lunes|Martes|Miercoles|Jueves|Viernes|Sabado|Domingo|Planificacion|
 |---|---|---|---|---|---|---|---|
@@ -47,3 +59,5 @@ Se configurará una plantilla de ejemplo en godot para al menos una plataforma. 
 >Todo el proceso será acompañado de la documentación tanto en comentarios de código como en el documento final.
 
 >La semana final se terminará la documentación, se creará una infográfica del ciclo de desarrollo y de las pipelines y se preparará la presentación
+
+>Idea de montar un sistema que te avise de la rotura de una build por aplicacion de mensajeria externa (mensja en discord)

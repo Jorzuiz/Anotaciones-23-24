@@ -1,4 +1,5 @@
 # Practica 1
+
 Práctica 1: Introducción al entorno de desarrollo y la programación de sistemas.
 
 v1.0
@@ -6,6 +7,7 @@ v1.0
 2 Requisitos
 3 Ejercicios
 Ejercicio 1
+
 1. Compilación
 2. Herramienta make
 3. Tamaño de variables
@@ -19,6 +21,7 @@ Ejercicio 4
 Ejercicio 5
 
 ## 1 Objetivos
+
 1. Familiarizarse con el entorno de desarrollo de aplicaciones C en GNU/Linux.
 2. Revisar los fundamentos de C
 3. Familiarizarse con el uso de la función getopt() para el tratamiento de opciones
@@ -28,6 +31,7 @@ Ejercicio 5
 El archivo [ficheros_p1.tar.gz](https://dacya.github.io/so-docs/ficheros_p1.tar.gz) contiene una serie de ficheros para la realización de algunos de los ejercicios de esta práctica.
 
 ## 2 Requisitos
+
 Para poder realizar con éxito la práctica el alumno debe haber leído y comprendido los siguientes documentos facilitados por el profesor:
 
 1. Transparencias de clase de Introducción al entorno de desarrollo, que nos introduce al entorno GNU/Linux que utilizaremos en el laboratorio, y describe cómo trabajar con proyectos C con Makefile. Además contienen un repaso de los conocimientos de C necesarios para realizar con éxito las prácticas, haciendo especial hincapié en los errores que cometen habitualmente los estudiantes menos experimentados en el lenguaje C.
@@ -43,18 +47,23 @@ En el directorio ejercicio1 de los ficheros para la práctica ([ficheros_p1.tar.
 Para cada directorio se proporciona una serie de tareas y preguntas que deberás responder, para las cuales tendrás que examinar y probar los ejemplos proporcionados. Consulta el manual del entorno para saber como utilizar el compilador. Puedes utilizar VSCode como editor.
 
 ### 1. Compilación
+
 - Compila el código del ejercicio y ejecútalo
 - Obtén la salida de la etapa de pre-procesado (opción -E o la opción `--save-temps` para obtener la salida de todas las etapas intermedias) y en un fichero hello2.i
 - ¿Qué ha ocurrido con la “llamada a min()” en hello2.i?
->Se ha localizado el codigo corresponiende a `min()` y se ha incluido en la llamada
+
+>Se localiza el codigo corresponiende a `min()` y se incluye en la llamada
 
 - ¿Qué efecto ha tenido la directiva `#include <stdio.h>`?
->Realiza un enlazado a una librería estática y se ha incluido al hello2.i
+
+>Realiza un enlazado a una librería estática y se encluye en hello2.i
 
 ### 2. Herramienta make
+
 - Examina el makefile, identifica las variables definidas, los objetivos (targets) y las regalas.
 - Ejecuta `make` en la linea de comandos y comprueba las ordenes que ejecuta para construir el proyecto.
 - Marca el fichero aux.c como modificado ejecutando touch aux.c. Después ejecuta de nuevo make. ¿Qué diferencia hay con la primera vez que lo ejecutaste? ¿Por qué?
+>Solo se compilan los archivos que han sido actualizados
 - Ejecuta la orden make clean. ¿Qué ha sucedido? Observa que el objetivo `clean` está marcado como phony en la directiva .PHONY: clean. ¿por qué? Para comprobarlo puedes comentar dicha línea del makefile, compilar de nuevo haciendo `make`, y después crear un fichero en el mismo directorio que se llame clean, usando el comando touch clean. Ejecuta ahora `make clean`, ¿qué pasa?
 - Comenta la línea `LIBS = -lm` poniendo delante una almoadilla (#). Vuelve a contruir el proyecto ejecutando `make` (haz un clean antes si es necesario). ¿Qué sucede? ¿Qué etapa es la que da problemas?
 
@@ -303,18 +312,22 @@ Realice las siguientes modificaciones en el programa `show-passwd.c`:
 
 ## Ejercicio 5
 En este ejercicio vamos a practicar la programación en bash que haga uso de la orden interna read (consulta help read) para procesar ficheros línea a línea:
+
 ```bash
 read [-ers] [-a array] [-d delim] [-i text] [-n nchars] [-N nchars] [-p prompt] [-t timeout] [-u fd] [name ...]
 ```
+
 Este comando lee una línea de la entrada estándar, la descompone en palabras, y asigna la primera palabra a la primera variable de la lista de nombres, la segunda a la segunda variable y así sucesivamente.
 
 Si queremos usar un delimitador especial para separar palabras podemos hacerlo asignando valor a la variable IFS antes de usar la operación read. Por ejemplo, para leer palabras separadas por ‘:’ usaríamos la forma:
+
 ```bash
 while IFS=':' read var1 var2 ... ;
 do
     # cualquier cosa con $var1, $var2
 done
 ```
+
 Y si no queremos leer de la entrada estándar, podemos redirigir la entrada de todo el bucle a un fichero:
 ```bash
 while IFS=':' read var1 var2 ... ;
