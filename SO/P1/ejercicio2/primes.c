@@ -10,7 +10,7 @@
 /**
  * This function takes an array of integers and returns the sum of its n elements.
  */
-int sum(int *arr, int n);
+int sum(int *arr, int n)
 
 /**
  * This function fills an array with the first n prime numbers.

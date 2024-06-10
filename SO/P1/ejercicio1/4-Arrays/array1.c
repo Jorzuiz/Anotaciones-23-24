@@ -39,5 +39,3 @@ void init_array2(int array[N])
 		array[i] = i*2;
 	printf("Array initialized\n\n");
 }
-
-

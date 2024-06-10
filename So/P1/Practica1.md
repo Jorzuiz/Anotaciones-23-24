@@ -49,58 +49,122 @@ Para cada directorio se proporciona una serie de tareas y preguntas que deberás
 ### 1. Compilación
 
 - Compila el código del ejercicio y ejecútalo
+
+$$
+\boxed{Preprocesado}\rightarrow
+\boxed{Compilado}\rightarrow
+\boxed{Ensamblado}\rightarrow
+\boxed{Enlazado}\\
+$$
 - Obtén la salida de la etapa de pre-procesado (opción -E o la opción `--save-temps` para obtener la salida de todas las etapas intermedias) y en un fichero hello2.i
 - ¿Qué ha ocurrido con la “llamada a min()” en hello2.i?
 
 >Se localiza el codigo corresponiende a `min()` y se incluye en la llamada
+>En este caso se sustituye `min()` por el código `a<b?a:b`
 
 - ¿Qué efecto ha tenido la directiva `#include <stdio.h>`?
 
 >Realiza un enlazado a una librería estática y se encluye en hello2.i
+>El código pasa de tener las 20 líneas originales a tener 746, correspondientes a la inclusión de la librería. De este modo el compilador en las siguientes etapas tiene acceso a TODO lo que necesito de `stdio.h`
+
 
 ### 2. Herramienta make
 
 - Examina el makefile, identifica las variables definidas, los objetivos (targets) y las regalas.
 - Ejecuta `make` en la linea de comandos y comprueba las ordenes que ejecuta para construir el proyecto.
 - Marca el fichero aux.c como modificado ejecutando touch aux.c. Después ejecuta de nuevo make. ¿Qué diferencia hay con la primera vez que lo ejecutaste? ¿Por qué?
+
 >Solo se compilan los archivos que han sido actualizados
-- Ejecuta la orden make clean. ¿Qué ha sucedido? Observa que el objetivo `clean` está marcado como phony en la directiva .PHONY: clean. ¿por qué? Para comprobarlo puedes comentar dicha línea del makefile, compilar de nuevo haciendo `make`, y después crear un fichero en el mismo directorio que se llame clean, usando el comando touch clean. Ejecuta ahora `make clean`, ¿qué pasa?
+>Make está diseñado de esta manera para detectar los cambios y no compilar cosas de más (Fuente: el manual)
+
+- Ejecuta la orden make clean. ¿Qué ha sucedido? Observa que el objetivo `clean` está marcado como phony en la directiva .PHONY: clean. ¿Por qué? Para comprobarlo puedes comentar dicha línea del makefile, compilar de nuevo haciendo `make`, y después crear un fichero en el mismo directorio que se llame clean, usando el comando touch clean. Ejecuta ahora `make clean`, ¿Qué pasa?
+
+>`.Phony` es un tipo de etiqueta especial en `make` que nos permite llamar a la regla clean, esto se hace para asegurarse de que la regla clean se llama y evitar conflictos si existe un archivo llamado `clean` fuera del `makefile`.
+>Si hacemos `touch clean` y llamamos a `make clean`, se ejecutará la recgla porque touch lo modifica, pero llamadas sucesivas lo ignorarán
+
 - Comenta la línea `LIBS = -lm` poniendo delante una almoadilla (#). Vuelve a contruir el proyecto ejecutando `make` (haz un clean antes si es necesario). ¿Qué sucede? ¿Qué etapa es la que da problemas?
+
+> Se usa para vincular la biblioteca libm, esto permite el uso de funciones matemáticas como `sqrt()` o `cos()`
+>Comentar esta linea produce problemas en la etapa de $\boxed{Enlazado}$ la cual es cuando se combinan los ficheros objeto `.o` generados por neustro programa y las biblioteas enlazadas para montar el ejecutable.
+>Esto permitiría al programa funcionar siempre y cuando no ejecute funciones de bibliotecas externas, al no encontrarse en el entorno de ejecución del ejecutable
 
 ### 3. Tamaño de variables
 Compila y ejecuta el código de cada uno de los ejemplos proporcionados y responde a las preguntas proporcionadas para ellos.
 
 - main1.c
   - ¿Por qué el primer `printf()` imprime valores distintos para ‘a’ con los modificadores `%d` y `%c`?
+  >`%d` y `%c` parsean un argumento de tipo `int` y lo representan por pantalla, en caso de `%d` convierte el `int` a notación decimal, `%c` lo parsea de `int` a `unsigned char`.
   - ¿Cuánto ocupa un tipo de datos `char`?
+  >1 byte ($2^3/8$ bits)
   - ¿Por qué el valor de ‘a’ cambia tanto al incrementarlo en 6? (la respuesta está relacionada con la cuestión anterior)
+  >Los 8 bits nos permiten guardar 256 valores(de 00000000 hasta 11111111), en caso de haber negativospodemos representar entre el valor -128 y el 127(el 0 cuenta), si incrementamos 122 en 6 nos daría 128 lo cual suma el bit 9 (que en este caso no existe) y nos deja con los 8 bits restantes a 0, en este caso el valor -127.
+  > Esto pasó a modo de bug en el Civilization(1991) original. Ghandi inicialmente tenia agresividad en 1, al elegir democracia como política se reducía en 2 su agresividad dejandole con -1. Al no usar valores negativos para su representación esto hacía `overflow` y ponía su agresividad en 256 haciendo que priorizara cabezas nucleares ante todo.
   - Si un “long” y un “double” ocupan lo mismo, ¿por qué hay 2 tipos de datos diferentes?
+  >EL programa devuelve los tamaños de long=4 y double =8
+  >La teoría dice que ambos deberían de ser de 64 bits (8 bytes) probablemente sea un error al correrlo en docker?
+  >La respuesta que se espera es que hable de que long representa valores enteros de 8 bytes (desde -9223372036854775808 hasta 9223372036854775807) mientras que double se usa para representar valores de punto flotante con algo menos de rango pero mayor precisión.
+  >Punto flotante funciona reservando una serie de bits (12 en C) para indicar el numero de decimales que puede tener un número. En este caso tenemos 52 bits prar representar números y se usan 11 bits para indiccar la posición de la coma en ellos (el bit restante es para negativo/positivo)
+  >las operaciones con números de punto flotante son implícitamente más costosas en el procesador.
+  ![alt text](puntoFlotante.png)
 - main2.c
-¿Tenemos un problema de compilación o de ejecución?
-¿Por qué se da el problema?. Soluciónalo, compila y ejecuta de nuevo.
-a,b,c, y x están declaradas de forma consecutiva. ¿Son sus direcciones concecutivas?
-¿Qué significa el modificar `"%lu"` en `printf()`?
-¿A qué dirección apunta "pc"? ¿Coincide con la de alguna variable anteriormente declarada? Si es así, ¿Coinciden los tamaños de ambas?
-¿Coincide el valor del tamaño de `array1` con el número de elementos del array? ¿Por qué?
-¿Coinciden las direcciones a la que apunta `str1` con la de `str2`?
-¿Por qué los tamaños (según `sizeof()`) de `str1` y `str2` son diferentes?
+  - ¿Tenemos un problema de compilación o de ejecución?
+  >Probelma de compilación.
+  - ¿Por qué se da el problema?. Soluciónalo, compila y ejecuta de nuevo.
+  > AL intentar crearse `array2[a];` se produce un error porque la variable a existe en tiempo de ejecución, no de compilación. Eso quiere decir que en el código, el compilador no sabe que valores se asignan solo se preocupa por el tamaño que necesita en memoria para guardar la información asique no puede saber cuanta memoria necesitamos para `array2[a];`
+  - a,b,c, y x están declaradas de forma consecutiva. ¿Son sus direcciones consecutivas?
+  >Pueden llegar a serlo pero dependerá de como las asigne el compilador
+  - ¿Qué significa el modificar `"%lu"` en `printf()`?
+  >`"%lu"` permite la representación de `unsigned long`.
+  - ¿A qué dirección apunta "pc"? ¿Coincide con la de alguna variable anteriormente declarada? Si es así, ¿Coinciden los tamaños de ambas?
+  >pc guarda un puntero a `char`, `char*` esto no es un `char`, es una dirección de memoria, mientras que un `char` ocupa 1 byte, la diracción de memoria se guarda en 4 bytes.
+  - ¿Coincide el valor del tamaño de `array1` con el número de elementos del array? ¿Por qué?
+  >No hay ningún valor guardado en el array, pero se ha reservado memoria para 10 elementos de 4 bytes, asique ocupa 40 bytes.
+  - ¿Coinciden las direcciones a la que apunta `str1` con la de `str2`?
+  >No, aunque los valores coincidan son variables diferentes y se guardan en sitios diferentes.
+  - ¿Por qué los tamaños (según `sizeof()`) de `str1` y `str2` son diferentes?
+  >`str1` es la variable de un puntero a char (1 * 4 bytes) y `str2` es un array de 21 chars (21 * 1 bytes)
+
 ### 4. Arrays
+
 Compila y ejecuta el código de los ejemplos proporcionados y responde a las preguntas propuestas para cada uno de ellos.
 
 - array1.c
   - ¿Por qué no es necesario escribir `"&list"` para obtener la dirección del array `list`?
+  >`list` se comporta como un puntero al inicio del array.
   - ¿Qué hay almacenado en la dirección de `list`?
+  >El valor de la primera dirección de `list`, `list[0]`.
   - ¿Por qué es necesario pasar como argumento el tamaño del array en la función `init_array`?
+  >Al introducirse un array en un método se produce un "decay" esto es que al pasarse en el método se pierde la información del tamaño y tipo porque se parsea a un puntero a una posición.
+  >Es importante que el método sepa el tamaño del array porque ya no se puede hacer un `sizeof()` al tratarse de un puntero.
+  >Lo que no sé es porque se pasa como argumento porque define N es una macro y se me antoja innecesario.
+  >Esto se hace en el segundo método al parecer
   - ¿Por qué el tamaño devuelto por `sizeof()` para el array de la función `init_array` no coincide con el declarado en `main()`?
+  >Porque devuelve puntero del primer elemento (4 bytes), no del array compelto (5 * 4 bytes).
   - ¿Por qué NO es necesario pasar como argumento el tamaño del array en la función `init_array2`?
+  >Al pasarlo junto a su tamaño el compilador puede inferir el tamaño del array dado que lo pasa por referencia
   - ¿Coincide el tamaño devuelto por `sizeof()` para el array de la función `init_array2` con el declarado en `main()`?
+  >No, pero más investigación ha desmostrado que debería de coincidir, debe de haber algun problema con el docker.
+  >`sizeof()` realiza correctamente el cálculo porque ya no calcula al tamaño del puntero del array, tiene información del tamaño `N`
 - array2.c
   - ¿La copia del array se realiza correctamente? ¿Por qué?
+  >Nope, solo se ha copiado las direcciones de memoria de inicio de los arrays.
   - Si no es correcto, escribe un código que sí realice la copia correctamente.
+  
+  ```c
+  for (int i = 0; i < size; i++)
+    dst[i] = src[i];  // Copia cada elemento individualmente
+  ```
+
   - Descomenta la llamada a la función `tmo` en la función `main()`. Compila de nuevo y ejecuta.
   - El problema que se produce, ¿es de compilación o de ejecución? ¿Por qué se produce?
+  >El compilador da un warning porque a no se llega a usar, pero no prohibe nada más.
+  >En ejecución se podrá realizar la asignación, pero pasado el tamaño de a[] (que es el primer valor) estaremos escribiendo en memoria sin saber qué es pudiendo dar errores de sobrecarga de pila, corrupción de datos de otras variables o incluso bloquear el programa.
   - Encuentra un valor de `MAXVALID` superior a 4 con el que no se dé el problema. ¿Se está escribiendo más allá del tamaño del array? Si es así, ¿por qué funciona el código?
+  >???
+  >No existe un valor MAXVALID superior a 4 que haga funcionar el código. Diferentes compiladores pueden tratar la memoria de muchas maneras y su ejecución será inestable en diferentes sistemas pareciendo funcionar en algunos.
+
 ### 5. Punteros
+
 Compila y ejecuta el código de los ejemplos y responde a las cuestiones proporcionadas para cada uno de ellos.
 
 - punteros1.c
