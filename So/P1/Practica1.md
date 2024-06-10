@@ -169,47 +169,98 @@ Compila y ejecuta el código de los ejemplos y responde a las cuestiones proporc
 
 - punteros1.c
   - ¿Qué operador utilizamos para declarar una variable como un puntero a otro tipo?
+  >`*` el asterisco, permite declarar una variable como puntero a dicho tipo de variable.
   - ¿Qué operador utilizamos para obtener la dirección de una variable?
+  >`&` ampersand.
   - ¿Qué operador se utiliza para acceder al contenido de la dirección “a la que apunta” un puntero?
+  >`*` asterisco también, denominado como operador de `indirección`.
+  >En este contexto devuelve el valor almacenado en la dirección de memoria
   - Hay un error en el código. ¿Se produce en compilación o en ejecución? ¿Por qué se produce?
+  >La asginación de memoria no puede hacerse de memoria, es el compilador el que debe de controlar las direcciones y asignarlas.
 - punteros2.c
   - ¿Cuántos bytes se reservan en memoria con la llamada a malloc()?
+  >508 bytes. 127 veces 4 que es el tamaño devuelto por `sizeof(int)`
   - ¿Cuál es la dirección del primer y último byte de dicha zona reservada?
+  >La que el compilador dictamine será la primera y las subsiguientes serán contiguas
   - ¿Por qué el contenido de la dirección apuntada por `ptr` es 7 y no 5 en el primer `printf()`?
-  - ¿Por qué se modfica el contenido de `ptr[1]` tras la sentencia `*ptr2=15;`?
+  >Porque se ha reasignado `*ptr=5` a `ptr[0]=7`. Cuando se llama a un array en C usando sçolo el puntero siempre señana a la primera posición.
+  - ¿Por qué se modifica el contenido de `ptr[1]` tras la sentencia `*ptr2=15;`?
+  >Porque `ptr2` se ha asignado a la misma direccion que `ptr`.
+  >Al realizar el incremento de `ptr2++;` se pasa a la dirección correspondiente a `ptr++;` que en este caso es `ptr[1]`.
   - Indica dos modos diferentes de escribir el valor 13 en la dirección correspondiente a `ptr[100]`.
+  >`ptr[100]=13`
+  >`*(ptr+100)=13`
   - Hay un error en el código. ¿Se manifiesta en compilación o en ejecución? Aunque no se manifieste, el error está. ¿Cuál es?
+  >Tras hacer la liberación del `ptr` con el `free()` ya no se puede acceder a él porque no contiene una dirección de memoria válida.
 - punteros3.c
   - ¿Por qué cambia el valor de `ptr[13]` tras la asignación `ptr =` `&c;`?
+  >Porque no estamos asignando un valor, sino la dirección de la variable `c`. El valor almacenado en `ptr[13]` ya no es el que hubiese en la posicion de `ptr` más los 13 incrementos, ahora es el valor que haya en `c` más esos 13, lo cual no tenemos ni idea de que será.
   - El código tiene (al menos) un error. ¿Se manifiesta en compilación o en ejecución? ¿Por qué?
+  >El acceso de memoria `ptr[13]`
+  >Se muestra en ejecución dado que no es un comportamiento erróneo en el código, pero si en la memoria a la hora de iniciar el programa.
   - ¿Qué ocurre con la zona reservada por `malloc()` tras a asignación `ptr =` `&c;`? ¿Cómo se puede acceder a ella? ¿Cómo se puede liberar dicha zona?
+  >Perdemos la direccion a la que apunta y no sirve de nada hacer el `free()`;
+
 ### 6. Funciones
+
 Compila y ejecuta el código de cada uno de los ejemplos proporcionados y responde a las cuestiones proporcionadas para cada uno de ellos.
 
 - arg1.c
   - ¿Por qué el valor de `xc` no se modifica tras la llamada a `sumC`? ¿Dónde se modifca esa información?
+  >La llamada a sumC no modifica ninguno de los parámetros de entrada. Devuelve un valor por salida resultante de operar con ellos.
   - Comenta las dos declaraciones adelantadas de `sum()` y `sumC()`. Compila de nuevo, ¿Qué ocurre?
-arg2.c
+  > El compilador no tiene información de los métodos `sum` y `sumC` si no se declaran de manera previa sin hacer falta que se implementen ahí.
+
+- arg2.c
   - ¿Por qué cambia el valor de `y` tras la llamada a `sum()`?
+  >La operación `sum()` se realiza sobre el puntero `ptr`. Las operaciones modifican los valores almacenados en la memoria asique3 se tiene repercusión fuera del método. Previamente se ha reasignado `ptr = &y` asique los cambios se realizan sobre `y`.
   - ¿Por qué en ocasiones se usa el operador `‘.’` y en otras `‘->’` para acceder a los campos de una estructura?
+  >`.` permite acceder a las instancias de un objeto, métodos o valores de una clase por ejemplo.
+  >`->` permite acceder a los miembros de un puntero o de una estructura.
   - ¿Por qué el valor de `zc` pasa a ser incorrecto sin volver a usarlo en el código?
+  >Porque `sumC()` devuelve un valor de dirección de una variable creada en el propio método, cuando se sale de él pierde el contexto y el valor.
   - Corrije el código para evitar el error producido en `zc`
+  > `return r;`
+
 ### 7. Cadenas de caracteres (strings)
+
 Compila y ejecuta el código de cada uno de los ejemplos proporcionados y responde a las cuestiones proporcionadas para cada uno de ellos.
 
 - strings1.c
   - El código contiene un error. ¿Se manifiesta en compilación o en ejecución? ¿Por qué se produce? Soluciona el error comentando la(s) línea(s) afectadas. Vuelve a compilar y ejecutar.
+  >Hay mas de un error???
+  >Msg sereserva memoria pero no se inicializa hasta la última linea
   - ¿En qué dirección está la letra `'B'` de la cadena `"Bonjour"`? ¿Y la de la la letra `'j'`?
+  > En la dirección inicial de `p`, en la direccion de `p` mas los 3 incrementos de cada caracter.
   - Tras la asignación `p=msg2;`, ¿cómo podemos recuperar la dirección de la cadena `"Bonjour"`?
-  - ¿Por qué la longitud de las cadenas `p` y `msg2` es 2 tras la línea 30? Se asignan 3 bytes a `'p'` que modifican a ambos, pero luego la longitud es sólo 2. 
+  > Si no se guarda previamente, reasignar la direccion hace que se pierda el contenido inicial.
+  - ¿Por qué la longitud de las cadenas `p` y `msg2` es 2 tras la línea 30? Se asignan 3 bytes a `'p'` que modifican a ambos, pero luego la longitud es sólo 2.
+  >`strlen()` solo cuenta los caracteres no nulos.
   - ¿Por qué `strlen()` devuelve un valor diferente a `sizeof()`?
+  >`strlen()` cuenta ccaracteres, mientras que `sizeof()` ceunta el espacio asignado a la variable. Por ejempli msg2 tiene reservado 28 bytes pero solo escritos 2.
+
 - strings2.c
-  - El código de `copy` no funciona. ¿Por qué?
-  - Usa ahora la función `copy2()` (descomenta la línea correspondiente). ¿Funciona la copilja?
+  - El código de `copy` no funciona. ¿Por qué?  
+  >No porque se intenta modificar el valor de un puntero pasado como valor, cuando se salga se perderá la información.
+  - Usa ahora la función `copy2()` (descomenta la línea correspondiente). ¿Funciona la copia?
+  >No será una copia. Aunque el parámetro esté ahora pasado por referencia solo se está apuntando el puntero a los datos originales.
   - Propón una implementación correcta de la copia.
+
+  ```c++
+  while(*org!= '\0') {
+    *dst++ = *org++;
+  }
+  *dst = '\0';
+  ```
+
   - ¿Qué hace la función `mod()`? ¿Por qué funciona?
+  > Convierte la cadena en mayúsculas.
+  >Funciona por la manera en la que los char están codificados, las minusculas y mayusculas están separadas popr 32 valores.
   - Descomenta la última llamada a la función `mod()`. Compila y ejecuta. ¿Por qué se produce el error?
+  >Estoy viendo BASTANTEs errores en este código, tengo que volver luego.
+
 ## Ejercicio 2
+
 El programa primes cuyo código fuente se muestra a continuación, ha sido desarrollado para calcular la suma de los n primeros números primos. Lamentablemente, el programador ha cometido algunos errores. Utilizando el depurador de C `gdb` el alumno debe encontrar y corregir los errores. Compilar directamente en línea de comandos: `gcc -g -w -o primes primes.c`
 
 ```c++
@@ -287,8 +338,27 @@ int is_prime(int x) {
   return 1;
 }
 ```
+
+>Llamando a gdb seguido del programa lo abrimos en modo depurador, para ello preimero debemos crear el ejecutable con la linea `gcc -g -w -o primes primes.c`
+>Dentro de gdb podemos insertar `break 65` para poner un break en esa linea, `run` para correr el promgrama entre los breakpoints, `next` o `step` para ir avanzando y `print nombre` para devovler el valor de una variable en un momento dado
+
+>Uso indebido de `argc=2` en lugar de `argc==2`.
+>Uso de `atoi` sin ser guardado en ningun lado. `atoi()` convierte un string de entrada en un valor int.
+>Error de asignacion `total =+ arr[i];`, el operador debería ser `+=`.
+>Se comienza por el número 3 para comprobar todos los primos impares.
+>El incremento `x+=2` se hace fuera para comprobar los números impares, no solo los 2 despues de un primo.
+
 ## Ejercicio 3
+
 En este ejercicio, trabajaremos el uso de `getopt()` una herramienta esencial para el procesado de opciones en línea de comando. El objetivo del ejercicio es completar el código del fichero `getopt.c` para que sea capaz de procesar las opciones `-e` y `-l` tal y como indica el uso del programa, que puede consultarse con la opción -h:
+
+>`getopt()` es el método usado para añadir parámetros a programas llamados por consola.
+>Los parámetros tienen que ir precedidos de `-` como por ejemplo `-e` o `-lu`
+>Llamadas sucesivas por el getopt pasan por cada uno de los parámetros.
+>El parametro seguido de un `:` indica que el parámetro tiene un argumento de entrada y se almacena en la variable `char* optarg`
+>La variable `optind` señala el indice al siguiente elemento que apunta argv.
+>`strtol()`
+
 ```bash
 $ make
 $ ./getopt -h
@@ -300,6 +370,7 @@ Usage: ./getopt [ options ] title
         -l lenght: lenght of the sequence to be printed
         title: name of the sequence to be printed
 ```
+
 Una vez completado, el programa deberá imprimir una secuencia de `lenght` números (10 por defecto; podemos cambiarlo con la opción `-l`) impares (por defecto) o pares si se incluye la opción `-e`. Los arguments `-l lenght` y `-e` son opcionales, pero el argumento `title` siempre debe estar presente en la línea de comando.
 
 Ejemplos de salidas para diferentes combinaciones de entrada:
@@ -328,8 +399,10 @@ Deben tenerse en cuenta las siguientes consideraciones:
 
   2. Un aspecto particular de la función `getopt()` es que establece el valor de distintas variables globales tras invocarse, siendo las más relevantes las siguientes:
 
-    - `char* optarg`: almacena el argumento pasado a la opción actual reconocida, si ésta acepta argumentos. Si la opción no incluye un argumento, entonces `optarg` se establece a NULL
-    - `int optind`: representa el índice del siguiente elemento en el `argv` (elementos que quedan sin procesar). Se usa frecuentemente para procesar argumentos adicionales del programa que no están asociados a ninguna opción. Veremos un ejemplo de ello en la práctica.
+- `char* optarg`: almacena el argumento pasado a la opción actual reconocida, si ésta acepta argumentos. Si la opción no incluye un argumento, entonces `optarg` se establece a NULL
+
+- `int optind`: representa el índice del siguiente elemento en el `argv` (elementos que quedan sin procesar). Se usa frecuentemente para procesar argumentos adicionales del programa que no están asociados a ninguna opción. Veremos un ejemplo de ello en la práctica.
+
 Para completar el código, incluye las opciones `-l` y `-e` en la llamada a `getopt()` y completa la estructura switch-case para modificar los valores por defecto de la variable `options`. Para leer el valor numérico asociado a la opción `-l`, deberás utilizar la variable global optarg, teniendo en cuenta que esta variable es una cadena de caracteres (tipo `char *`) y, sin embargo, queremos almacenar la opción como un número entero (tipo `int`). Consulta el uso de la función `strtol()` en el manual (`man 3 strtol`) para saber cómo realizar esa conversión.
 
 Asimismo, dado que el argumento title no será procesado por `getopt()` (pues no está precedido por una marca de opción al estilo `-l`), deberemos continuar el procesamiento de la cadena de entrada tras el bucle `for`. Para ello, se usará la variable `optind` junto con `argv` para almacenar el valor de la cadena de caracteres que será el título de nuestra secuencia.
@@ -337,8 +410,10 @@ Asimismo, dado que el argumento title no será procesado por `getopt()` (pues no
 Completa el código y responde a las siguientes preguntas:
 
 1. ¿Qué cadena de caracteres debes utilizar como tercer argumento de `getopt()`?
+>El tercer argumento `hel:` corresponde a cada una de las opciones, `h`, `e`, `l` por separado y `:` indica que la opcion `l` acepta un parámetro extra con información.
 
 2. ¿Qué línea de código utilizas para leer el argumento `title`?
+>Llamadas recursivas a `optin()` iteran por las opciones marcadas con `-` y por sus parámetros de conter `:`. Al finalizar optind contendrá un índice al siguiente parámetro, que en este caso guardaremos en la opcion `title` usando `options.title = argv[optind];`.
 
 ## Ejercicio 4
 Estudiar el código y el funcionamiento del programa `show-passwd.c`, que lee el contenido del fichero del sistema `/etc/passwd` e imprime por pantalla (o en otro fichero dado) las distintas entradas de `/etc/passwd` –una por línea–, así como los distintos campos de cada entrada. El fichero `/etc/passwd` almacena en formato de texto plano información esencial de los usuarios del sistema, como su identificador numérico de usuario o grupo así como el programa configurado como intérprete de órdenes (shell) predeterminado para cada usuario. Para obtener más información sobre este fichero se ha de consultar su página de manual: `man 5 passwd`

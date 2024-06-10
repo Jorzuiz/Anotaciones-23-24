@@ -8,7 +8,7 @@ void copy2(char* org, char** dst)
 
 void copy(char* org, char* dst)
 {
-	strcpy(dst, org);
+	dst = org;
 }
 
 void mod(char* org, char* dst)
@@ -32,7 +32,7 @@ int main()
 	mod(str1, str3);
 	printf("str1 %s str3 %s\n", str1, str3);
 
-	//mod(str1, str1);
+	mod(str1, str1);
 	return 0;
 }
 

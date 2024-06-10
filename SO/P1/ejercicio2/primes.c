@@ -25,8 +25,8 @@ int is_prime(int x);
 int main(int argc, char **argv) {
 
   int n = 10; // by default the first 10 primes
-  if(argc = 2) {
-    atoi(argv[1]);
+  if(argc == 2) {
+    n = atoi(argv[1]);
   }
   int* primes = (int*)malloc(n*sizeof(int));
   compute_primes(primes, n);
@@ -49,14 +49,13 @@ int sum(int *arr, int n) {
 
 void compute_primes(int* result, int n) {
   int i = 0;
-  int x = 2;
+  int x = 3;
   while(i < n) {
     if(is_prime(x)) {
       result[i] = x;
       i++;
     }
-    
-      x += 2;//this out
+      x += 2;
   }
   return;
 }
@@ -65,7 +64,7 @@ int is_prime(int x) {
   if( x < 2 || x % 2 == 0) { // x < 2 condition added 
     return 0;
   }
-  for(int i=3; i<x; i+=2) {
+  for(int i=3; i<sqrt(x); i+=2) {
     if(x % i == 0) {
       return 0;
     }
