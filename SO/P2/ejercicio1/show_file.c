@@ -4,6 +4,7 @@
 
 int main(int argc, char* argv[]) {
 	FILE* file=NULL;
+
 	if (argc!=2) {
 		fprintf(stderr,"Usage: %s <file_name>\n",argv[0]);
 		exit(1);
@@ -19,7 +20,9 @@ int main(int argc, char* argv[]) {
 
     size_t bytesRead;
 
+    // Devuelve nª de bytes leidos, mete los bytes en buffer, cada uno de 1 byte, buffer_size veces, del archivo file
 	while ((bytesRead = fread(buffer, 1, buffer_size, file)) > 0) {
+        // Mismo funcionamiento, pero en vez de escribirlos en un file, lo hace en stdout
         size_t bytesWritten = fwrite(buffer, 1, bytesRead, stdout);
 
         if (bytesWritten < bytesRead) {
