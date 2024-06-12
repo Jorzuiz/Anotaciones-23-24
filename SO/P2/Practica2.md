@@ -4,7 +4,7 @@ En esta práctica vamos a hacer varios ejercicios orientados a afianzar nuestro 
 
 Se aconseja al alumno que cree un directorio para la práctica con un subdirectorio por ejercicio. En las instrucciones se asume que el ejercicio N se hace en un subdirectorio llamado ejercicioN dentro del directorio común para la práctica.
 
-El archivo ficheros_p2.tar.gz contiene una serie de ficheros que pueden usarse como punto de partida para el desarrollo de los ejercicios de esta práctica, así como unos makefiles que pueden ser usados para la compilación de los distintos proyectos.
+El archivo [ficheros_p2.tar.gz](https://dacya.github.io/so-docs/ficheros_p2.tar.gz) contiene una serie de ficheros que pueden usarse como punto de partida para el desarrollo de los ejercicios de esta práctica, así como unos makefiles que pueden ser usados para la compilación de los distintos proyectos.
 
 # 2 Ejercicios
 
@@ -44,6 +44,31 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 ```
+> Se sustituye el getc por:
+```c
+	/* Read file using fread and write using fwrite */
+    size_t buffer_size = 1024;  // You can adjust the buffer size
+    unsigned char buffer[buffer_size];
+
+    size_t bytesRead;
+
+    // Devuelve nª de bytes leidos, mete los bytes en buffer, cada uno de 1 byte, buffer_size veces, del archivo file
+	while ((bytesRead = fread(buffer, 1, buffer_size, file)) > 0) {
+        // Mismo funcionamiento, pero en vez de escribirlos en un file, lo hace en stdout
+        size_t bytesWritten = fwrite(buffer, 1, bytesRead, stdout);
+
+        if (bytesWritten < bytesRead) {
+            fclose(file);
+            fprintf(stderr, "Error writing to stdout\n");
+            exit(3);
+        }
+    }
+```
+> Para ello se crea un `buffer[1024]` y se realizan lecturas secuenciales del archivo que se pasan a stdout
+> El final del archivo está controlado por la salide del fread que funciona de la siguiente manera
+> Numero de bytes leidos = fread(buffer donde se guardan, tamaño de la lectura en bytes, tamaño del buffer, descriptor de archivo para leer)
+> El 1 indica que los datos que leemos son de 1 byte, sabemos que es un archivo de texto y que los chars ocupan 1 byte. En caso de leerse datos en formato int o double debería cambiarse a 4 por ejemplo.
+> Asi mismo hay un sector de código que comprueba si se ha producido error en la lectura
 
 ## Ejercicio 2: Escritura y lectura de cadenas de caracteres en ficheros
 
@@ -75,6 +100,23 @@ Lisbon
 
 Por simplicidad para la implementación del programa `read-strings.c`, se ha de desarrollar una función auxiliar `char* loadstr(FILE* input)`. Esta función lee una cadena de caracteres terminada en `'\0'` del fichero cuyo descriptor se pasa como parámetro, reservando dinámicamente la cantidad de memoria adecuada para la cadena leída y retornando dicha cadena. La función tendrá que averiguar primero el número de caracteres de la cadena que comienza a partir de la ubicación actual del puntero de posición del fichero, leyendo caracter a caracter. Una vez detectado el caracter terminador, restaurará el indicador de posición del fichero (moviéndolo hacia atrás) y, finalmente realizará una lectura de la cadena completa.
 
+> La lectura de los argumentos se hace en el fichero mediante el bucle:
+```c
+// i[0] es el programa i[1] el archivo y despues vienen los strings
+for(i=2; i<argc;i++)
+        fprintf(file, "%s\n", argv[i]);       
+```
+> fprintf() da formato a la cadena, poniendo un salto de linea tras cada string
+```c
+// Para más información revisar el código del programa
+while (fgetc(input) != '\0') { length++; }
+fseek(input, pos, SEEK_SET);
+char* str = (char*)malloc(length + 1);
+fread(str, 1, length + 1, input);
+```
+> Se usa un bucle while con fgetc para calcular el numero de caracteres del ficher. Se reinicia el descriptor al inicio, se reserva la memoria más el byte nulo (fgetc() lo ignora) y se cargan los bytes
+
+
 ## Ejercicio 3: Gestión de ficheros de texto y binarios con la biblioteca estándar de C
 
 En este ejercicio de la práctica se desarrollará un programa C más elaborado que lea y escriba de ficheros regulares tanto de texto, como en formato binario. Para su implementación, los estudiantes deberán utilizar al menos las siguientes funciones de la biblioteca estándar de C: `getopt`, `printf`, `fopen`, `fclose`, `fgets`, `fscanf`, `feof`, `fprintf`, `fread`, `fwrite` y `strsep`. Se deben consultar las páginas de manual de estas funciones en caso de duda sobre su comportamiento.
@@ -102,7 +144,7 @@ El fichero de ejemplo almacena 4 registros de estudiantes, donde la información
 
 Para leer un fichero de texto de estudiantes e imprimir su contenido en formato amigable, el programa `student-records` deberá invocarse especificando las opciones `-i` (input) y `-p` (print) simultáneamente en la línea de comando, donde la opción `-i` acepta un parámetro indicando la ruta del fichero de texto. Así por ejemplo, asumiendo que existe un fichero students-db.txt en el directorio actual que contiene el texto de ejemplo mostrado anteriormente, la ejecución del programa producirá la siguiente salida:
 
-```c++
+```bash
 usuarioso@debian:~/exercise3$ ./student-records -i students-db.txt -p  
 [Entry #0]
         student_id=27
@@ -130,7 +172,7 @@ Por simplicidad en la implementación, cada registro se imprimirá por la salida
 
 Además de las opciones arriba mencionadas, se implementará una opción `-h` (help), que imprima el listado de opciones soportadas por el programa:
 
-```c++
+```bash
 usuarioso@debian:~/exercise3$ ./student-records -h 
 Usage: ./student-records [ -h | -p | -i file ] 
 ```

@@ -4,12 +4,15 @@
 #include <err.h>
 
 void write_strings(FILE* file, int argc, char* argv[]){
-	int i;
-	for(i=2; i<argc;i++){ // i=2 because 0 is the program 1 the file and after this is all what we want to write
-		fwrite(argv[i], 1, strlen(argv[i]) + 1, file);
+	
+    int i;
+    // i[0] es el programa i[1] el archivo y despues vienen los strings
+	for(i=2; i<argc; i++){ 		
+        //fwrite(argv[i], 1, strlen(argv[i]) + 1, file);
         
+        // %s\n es un modificador de formato que hace salto de linea tras cada string
+        fprintf(file, "%s\n", argv[i]);       
 	}
-    
 }
 
 int main(int argc, char* argv[])

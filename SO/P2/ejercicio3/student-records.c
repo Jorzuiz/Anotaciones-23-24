@@ -9,7 +9,6 @@
 
 int print_text_file(char *path)
 {
-    /* To be completed (part A) */
     FILE *file = fopen(path, "r");
     if (!file)
     {
@@ -31,7 +30,6 @@ int print_text_file(char *path)
 
 int print_binary_file(char *path)
 {
-    /* To be completed (part B) */
     FILE *file = fopen(path, "rb");
     if (!file)
     {
@@ -39,6 +37,7 @@ int print_binary_file(char *path)
         return EXIT_FAILURE;
     }
 
+    // Dato inicial del fichero (4 bytes)
     int num_entries;
     fread(&num_entries, sizeof(int), 1, file);
 
@@ -110,11 +109,11 @@ int main(int argc, char *argv[])
             break;
         case 'o':
             options.output_file = optarg;
-			options.input_file=optarg;
+			options.input_file = optarg;
             options.action = WRITE_BINARY_ACT;
             break;
         case 'c':
-            options.input_file=optarg;
+            options.input_file = optarg;
             options.action = PRINT_BINARY_ACT;
             break;
         default:
