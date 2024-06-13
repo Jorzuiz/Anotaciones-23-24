@@ -1,105 +1,157 @@
+#define _XOPEN_SOURCE 500 //Para sigaction
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <signal.h>
-#include <sys/types.h>
-#include <sys/ipc.h>
-#include <sys/sem.h>
-#include <sys/shm.h>
+
+#include <sys/mman.h> //Para memoria compartida
+#include <signal.h> //Para el uso de señales
+#include <semaphore.h> //Para el uso de semaforos
+#include <fcntl.h> //Para el uso de O_ flags
 
 #define M 10
-#define KEY_SEM "/caldero_sem"
-#define KEY_SHM 1234
 
-int finish = 0;
-int sem_id, shm_id;
+//Se usaran semaforos y objetos de memoria compartida
+//Se trata de un problema de productor-consumidor con distintos procesos en lugar de con distintos hilos de un 
+// proceso
 
-struct SharedMemory {
-    int servings;
-};
-
-struct sembuf sem_wait = {0, -1, 0}; // Esperar
-struct sembuf sem_signal = {0, 1, 0}; // Señal
-
-struct SharedMemory *shared_mem;
-
-/*void Producer() {
-...
-element = produce();
-mutex_lock(&mutex)
-while( num_elem == MAX_BUFFER)
-    cond_wait(&event, &mutex);
-insert(element);
-cond_broadcast(&event);
-mutex_unlock(&mutex);
-...
-}
+/*
+Reglas y restricciones:
+	- Cada salvaje se sirve una racion de un caldero
+	- Si este esta vacio avisan al cocinero para que reponga
+	- Los salvajes no pueden invocar a la funcion getServingsFromPot() si esta vacio
+	- El cocinero solo puede invocar putServingsInPot() si esta vacio
 */
+
+/*
+COCINERO:
+Solo hay un proceso de este programa y este mismo crea los recursos compartidos y ejecuta la funcion cocinero().
+Este programa tendra un manejador de señales para SIGINT y SIGTERM. Cuando sean capturadas el programa debe terminar,
+eliminando todos los recursos compartidos.
+*/
+
+/*
+	- Semaforos: objeto que restringe el acceso a una region de datos compartida. 
+	- Memoria compartida: datos que se comparten entre varios procesos y que pueden tener permisos de escritura/lectura
+*/
+
+/*
+Productor
+	- Crea los semaforos con nombre (sem open)
+	- Crea un archivo (open)
+	- Le asigna espacio (ftruncate)
+	- Proyecta el archivo en su espacio de direcciones (mmap)
+	- Utiliza la zona de memoria compartida
+	- Desproyecta la zona de memoria compartida (munmap)
+	- Cierra y borra el archivo
+
+Consumidor
+	- Abre los semaforos (sem open)
+	- Debe esperar a que el archivo este creado para abrirlo (open)
+	- Proyecta el archivo en su espacio de direcciones (mmap)
+	- Utiliza la zona de memoria compartida
+	- Cierra el archivo
+*/
+
+//VARIABLES GLOBALES
+int finish = 0; //1--> true, 0 --> false
+//Semaforo para caldero con y sin comida. No es con semaforos a modo de cerrojo
+// porque los salvajes acceden al caldero de uno en uno
+sem_t* full;
+sem_t* empty;
+int* caldero; //Importante que sea un puntero porque formara parte de la region de memoria compartida
+
+//En caso de cierre abrupto el handler se encarga de cerrar y borrar los datos compartidos
+void signalHandler(int signum){
+
+	sem_post(empty);
+	finish = 1;
+	//Se elimina el nombre del objeto en memoria compartida
+	shm_unlink("/CALDERO");
+	//Se desproyecta la memoria compartida
+	munmap(caldero, sizeof(int));
+	//Se eliminan del sistema
+	sem_unlink("/FULL");
+	sem_unlink("/CLOSE");
+	//Se cierran los semaforos
+	sem_close(full);
+	sem_close(empty);
+}
 
 void putServingsInPot(int servings)
 {
-    if (semop(sem_id, &sem_wait, 1) == -1) {
-        perror("semop");
-        exit(EXIT_FAILURE);
-    }
-
-    // Reponer raciones
-    printf("Cocinero repone %d raciones en el caldero\n", servings);
-    shared_mem->servings = servings;
-
-    if (semop(sem_id, &sem_signal, 1) == -1) {
-        perror("semop");
-        exit(EXIT_FAILURE);
-    }
+	(*caldero) = servings;
+	printf("Filling pot %d\n", (*caldero));
 }
 
 void cook(void)
 {
-    while (!finish) {
-        putServingsInPot(M);
-    }
-}
-
-void handler(int signo)
-{
-    finish = 1;
+	while(!finish) {
+		sem_wait(empty); //el resto esperaa que se llene
+		putServingsInPot(M);
+		sem_post(full); //avisa de que ya se ha llenado
+	}
 }
 
 int main(int argc, char *argv[])
 {
-    // Manejo de señales
-    signal(SIGINT, handler);
-    signal(SIGTERM, handler);
+	//Declaracion de las acciones asociadas a las señales
+	struct sigaction actionSignals;
+	actionSignals.sa_handler = signalHandler;
+	sigemptyset(&actionSignals.sa_mask);
+	actionSignals.sa_flags = SA_RESTART;
 
-    // Crear semáforo
-    sem_id = semget(ftok(KEY_SEM, 'R'), 1, IPC_CREAT | 0666);
-    if (sem_id == -1) {
-        perror("semget");
-        exit(EXIT_FAILURE);
-    }
+	if(sigaction(SIGINT, &actionSignals, NULL)==-1){
+		perror("sigaction SIGINT\n");
+		exit(EXIT_FAILURE);
+	}
 
-    // Inicializar semáforo
-    semctl(sem_id, 0, SETVAL, 1);
+	if(sigaction(SIGTERM, &actionSignals, NULL)==-1){
+		perror("sigaction SIGTERM\n");
+		exit(EXIT_FAILURE);
+	}
 
-    // Crear memoria compartida
-    shm_id = shmget(ftok(KEY_SHM, 'R'), sizeof(struct SharedMemory), IPC_CREAT | 0666);
-    if (shm_id == -1) {
-        perror("shmget");
-        exit(EXIT_FAILURE);
-    }
+	//A PARTIR DE AQUI SE CREA LA MEMORIA COMPARTIDA
+	//Este es el objeto que se va a proyectar en la region de memoria compartida
+	int shared;
+	//Las flags y los modos son iguales a cuando se hace open de un fichero
+	//Se ha abierto de manera que se puede escribir y leer; y escritura y lectura, 
+	// escritura y ejecucion para usuario y grupo
+	shared = shm_open("/CALDERO", O_RDWR|O_CREAT, S_IRWXU | S_IRWXG); //Se obtiene el descriptor
+	//El fichero referenciado por shared se trunca al tamaño indicado como segundo parametro
+	ftruncate(shared, sizeof(int));
 
-    // Adjuntar memoria compartida
-    shared_mem = (struct SharedMemory *)shmat(shm_id, NULL, 0);
-    if (shared_mem == (struct SharedMemory *)-1) {
-        perror("shmat");
-        exit(EXIT_FAILURE);
-    }
+	//Ahora, se proyecta el objeto en memoria usando MAP_SHARED
+	//(address de memoria, tamaño, flags de proteccion, flags de visibilidad, descriptor de mem compartida, offset)
+	//Si address de memoria esta a NULL, el kernel decide el sitio donde ponerlo, es la mejor opcion
+	caldero = (int*)mmap(NULL, sizeof(int), PROT_READ|PROT_WRITE, MAP_SHARED, shared, 0);
 
-    // Inicializar memoria compartida
-    shared_mem->servings = 0;
+	//Se crean los semaforos con nombre
+	full = sem_open("/FULL", O_CREAT, S_IRUSR | S_IWUSR, 0);
+	if(full == SEM_FAILED){
+		perror("sem open FULL failed\n");
+		exit(EXIT_FAILURE);
+	}
+	empty=sem_open("/EMPTY", O_CREAT, S_IRUSR | S_IWUSR, 1);
 
-    // Ciclo del cocinero
-    cook();
+	//Se puede obtener el valor del semaforo empty usando sem_getvalue(empty, &variable) para debug
 
-    return 0;
+	//A partir de aqui se ejecuta hasta que finish valga true
+	cook();
+
+	printf("End of program\n");
+
+	//Se elimina el nombre del objeto en memoria compartida
+	shm_unlink("/CALDERO");
+	//Se desproyecta la memoria compartida
+	munmap(caldero, sizeof(int));
+	//Se cierran los semaforos
+	sem_close(full);
+	sem_close(empty);
+	//Se eliminan del sistema
+	sem_unlink("/FULL");
+	sem_unlink("/CLOSE");
+
+
+	return 0;
 }

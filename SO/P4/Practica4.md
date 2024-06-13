@@ -98,9 +98,10 @@ Una vez parseadas las opciones, el programa principal mostrará por pantalla el 
 
 ## Ejercicio 2: Creación y paso de parámetros a hilos.
 
-En este ejercicio vamos a usar la biblioteca de pthreads, por lo que será necesario compilar y enlazar con la opción -pthread.
+En este ejercicio vamos a usar la biblioteca de `pthreads`, por lo que será necesario compilar y enlazar con la opción `-pthread`.
+> Se añade a la linea gcc
 
-Escribir un programa hilos.c que va a crear hilos cuya funcionalidad vendrá determinada por los argumentos que se le pasen en la creación. Los hilos recibirán como argumentos el puntero a una estructura que contenga dos campos: un entero, que será el número de hilo, y un caracter, que indicará si el hilo es prioritario (P) o no (N).
+Escribir un programa `hilos.c` que va a crear hilos cuya funcionalidad vendrá determinada por los argumentos que se le pasen en la creación. Los hilos recibirán como argumentos el puntero a una estructura que contenga dos campos: un entero, que será el número de hilo, y un caracter, que indicará si el hilo es prioritario (P) o no (N).
 
 El programa deberá crear una variable para el argumento de cada hilo usando memoria dinámica, inicializar dicha variable con el número de hilo y su prioridad (los pares serán prioritarios y los impares no lo serán), crear los hilos y esperar a que finalicen.
 
@@ -116,13 +117,14 @@ En este ejercicio vamos a experimentar el envío de señales, haciendo que un pr
 
 El programa principal recibirá como argumento el comando del programa que se desea que ejecute el proceso hijo. Si a su vez este comando consta de varios argumentos, estos se pasarán separados por espacios a continuación del nombre del programa a ejecutar.
 
-El proceso padre creará un hijo, que cambiará su ejecutable con una llamada a execvp. A continuación, el padre establecerá que el manejador de la señal SIGALRM sea una función que envíe una señal SIGKILL al proceso hijo y programará una alarma para que le envíe una señal a los 5 segundos. Antes de finalizar, el padre esperará a que finalice el hijo y comprobará la causa por la que ha finalizado el hijo (finalización normal o por recepción de una señal), imprimiendo un mensaje por pantalla.
+El proceso padre creará un hijo, que cambiará su ejecutable con una llamada a execvp. A continuación, el padre establecerá que el manejador de la señal `SIGALRM` sea una función que envíe una señal `SIGKILL` al proceso hijo y programará una alarma para que le envíe una señal a los 5 segundos. Antes de finalizar, el padre esperará a que finalice el hijo y comprobará la causa por la que ha finalizado el hijo (finalización normal o por recepción de una señal), imprimiendo un mensaje por pantalla.
 
 El alumno debe consultar las páginas de manual de: `sigaction`, `alarm`, `kill`, `wait`.
 
 Para comprobar el funcionamiento correcto de nuestro programa podemos usar como argumento un ejecutable que termine en menos de 5 segundos (como ls o echo) y uno que no finalice hasta que le llegue la señal (como xeyes).
 
-Una vez funcione el programa, modificar el padre para que ignore la señal SIGINT y comprobar que, efectivamente, lo hace.
+Una vez funcione el programa, modificar el padre para que ignore la señal `SIGINT` y comprobar que, efectivamente, lo hace.
+> `SIGINT` hace que el programa ignore las interrupciones de teclado
 
 ## Ejercicio 4: Manejo de ficheros con varios procesos e hilos
 

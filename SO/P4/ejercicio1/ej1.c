@@ -59,7 +59,7 @@ void process_recurse(char *dirname, char *name)
 		perror("fork");
 		exit(1);
 	}
-	else if(pid==0){    // Hijo
+	else if(pid == 0){    // Hijo
         strcpy(path, dirname);
         strcat(path, "/");
         strcat(path, name);
