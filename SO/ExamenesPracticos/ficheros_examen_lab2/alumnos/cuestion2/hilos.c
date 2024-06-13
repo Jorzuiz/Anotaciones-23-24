@@ -5,7 +5,6 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <sys/wait.h>
 
 #define PATH_MAX 4096
 
@@ -30,22 +29,22 @@ void usage(void)
 void list_dir(char *name)
 {
 	DIR* dir;
-	dir = opendir(name);
+	struct dirent * dirent;
 
-	if(dir==NULL){
+	dir = opendir(name);
+	if(dir == NULL){
 		perror("opendir");
-		exit(EXIT_FAILURE);
+		exit(1);
 	}
 
-	struct dirent * dirent;
 	// readdir returns the NEXT directory name (in struct form)
 	// dirent->d_name; name in string 
 	// dirent->d_type; type of file (DT_DIR = directory)
-	while((dirent= readdir(dir))!= NULL){
+	while((dirent = readdir(dir))!= NULL){
 		printf("%s \n", dirent->d_name);
 	}
-
-	closedir(dir);
+    
+	closedir(dir);	
 }
 
 /* apartado c */
@@ -60,17 +59,14 @@ void process_recurse(char *dirname, char *name)
 		exit(1);
 	}
 	else if(pid==0){    // Hijo
-        strcpy(path, dirname);
-        strcat(path, "/");
-        strcat(path, name);
+
         // Crea una copia propia con argumento -R en directorio name
-		execl(opt.progname, opt.progname, "-R", name, NULL);
-        perror("execl");
-		exit(EXIT_FAILURE);
+		execlp(opt.progname, opt.progname, "-R", name, NULL);
+        perror("execlp");
+		exit(1);
 	}
 	else{   // Padre
-		//waitpid(pid, NULL,0);
-		wait(NULL);
+		waitpid(pid, NULL,0);
 	}
 
 }
@@ -112,13 +108,13 @@ int main(int argc, char **argv)
 			break;
 		case 'R':
 			opt.recurse=1;
-        	if(argv[optind] != NULL){
-				dirname = argv[optind];
-			}
 		    break;
 		default:
 			break;
 		}
+        if(argv[optind] != NULL){
+				dirname = argv[optind];
+			}
 	}
 
 	if (opt.recurse)

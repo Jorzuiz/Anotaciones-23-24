@@ -19,8 +19,10 @@ int print_text_file(char *path)
     char line[MAXLEN_LINE_FILE];
     while (fgets(line, MAXLEN_LINE_FILE, file) != NULL)
     {
-        //char* token = strsep(&line, ":"); use this to split 
-        
+        //char* end = line, begin = line;
+        //char* token = strsep(&end, ":"); use this to split 
+        //printf("%s, begin")
+
         printf("%s", line);
     }
 
@@ -59,7 +61,7 @@ int print_binary_file(char *path)
 int write_binary_file(char *input_file, char *output_file)
 {
     /* To be completed (part C) */
-    FILE *input = fopen(input_file, "r");
+    FILE *input = fopen(input_file, "rb");
     FILE *output = fopen(output_file, "wb");
     if (!input || !output)
     {

@@ -10,58 +10,104 @@ El archivo [ficheros_p3.tar.gz](https://dacya.github.io/so-docs/ficheros_p3.tar.
 ## Ejercicio 1: Copia de ficheros regulares
 Diseña un programa `copy.c` que permita hacer la copia de un fichero regular usando las llamadas al sistema del estándar POSIX: `open`, `read`, `write` y `close`. Se deben consultar sus páginas de manual, prestando especial atención a los flags de apertura: `O_RDONLY`, `O_WRONLY`, `O_CREAT`, `O_TRUNC`.
 
+> Los flags son los equivalentes a `r` `rb` o `w` que suabamos en la práctica anterior. `O_RDONLY` abre el archivo SIN permisos de escritura, `O_WRONLY` abre el archivo SIN permisos de lectura (No sé porque ibas a querer machacar lo que está dentro pero bueno), `O_CREAT` crea el archivo si no existe , `O_TRUNC` comprueba si se peude escribir en el archivo y lo trunca a 0 bytes (lo borra??).
+
 El programa recibira dos parámetros por la línea de llamadas. El primero será el nombre del fichero a copiar (fichero origen) y el segundo será el nombre que queremos darle a la copia (fichero destino).
 
-El programa debe realizar la copia en bloques de `512B`, usando un array local como almacenamiento intermedio entre la lectura y la escritura. El programa debe ir leyendo bloques de 512 bytes del fichero origen y escribiendo los bytes leídos en el fichero destino. Debe tenerse en cuenta que si el tamaño del fichero no es múltiplo de 512 bytes la última vez no se leerán 512 bytes, sino lo que quede hasta el final del fichero (conultar el apartado RETURN VALUE en la página de manual de read). Por ello siempre se deben escribir en el fichero destino tantos bytes como se hayan leído del fichero origen.
+El programa debe realizar la copia en bloques de `512 bytes`, usando un array local como almacenamiento intermedio entre la lectura y la escritura. El programa debe ir leyendo bloques de `512 bytes` del fichero origen y escribiendo los bytes leídos en el fichero destino. Debe tenerse en cuenta que si el tamaño del fichero no es múltiplo de `512 bytes` la última vez no se leerán `512 bytes`, sino lo que quede hasta el final del fichero (consultar el apartado `RETURN VALUE` en la página de manual de `read()`). Por ello siempre se deben escribir en el fichero destino tantos bytes como se hayan leído del fichero origen.
 
-Para comprobar el efecto de O_TRUNC, se sugiere al alumno que antes de ejecutar su programa de copia, cree un fichero con cualquier contenido que se llame como el fichero destino. Después puede copiar otro fichero usando el nombre elegido para el fichero destino y comprobar que el contenido anterior desaparece al usarse el flag `O_TRUNC`.
+Para comprobar el efecto de `O_TRUNC`, se sugiere al alumno que antes de ejecutar su programa de copia, cree un fichero con cualquier contenido que se llame como el fichero destino. Después puede copiar otro fichero usando el nombre elegido para el fichero destino y comprobar que el contenido anterior desaparece al usarse el flag `O_TRUNC`.
 
-Para comprobar el funcionamiento correcto de nuestro programa podemos usar los comandos de shell diff y hexdump (este último para ficheros binarios).
+>`O_TRUNC` trunca el archivo a 0 de tener permisos de escritura, esto quiere decir que de existir, pone su valor a 0. Esto puede ser importante si se quiere mantener los inodos del fichero intacto, o si no se tiene permisos de eliminación. Así mismo, en alto volumen de llamadas es más rápido truncar que hacer un borrado. 
+
+Para comprobar el funcionamiento correcto de nuestro programa podemos usar los comandos de shell `diff` y `hexdump` (este último para ficheros binarios).
+
+>`open()` `read()` y `write()` son operaciones denomiandas macros (creo) de bajo nivel. Las que hemos usado hasta ahora como `fopen()` `fread()` y `fwrite()` usan esas operaciones con funcionalidades por encima que monta el SO y que pueden diferir. Operaciones como `fscanf()` solo son posibles con estas ultimas.
+
+>`open()` devuelve un integer que actua como descriptor de fichero, se puede usar en las operaciones `read()` y `write()`.
+>Estas operaciones usan un `offset` interno para ir avanzando las escrituras, requieren de un descriptor, un buffer y un tamaño de lectura, la salida puede usarse para controlar el fin del fichero
+
 
 ## Ejercicio 2: Enlaces simbólicos.
-Lo primero que vamos a hacer en este ejercicio es crear un enlace simbólico a un fichero cualquiera usando el comando ln. Por ejemplo, si queremos crear un enlace que se llame mylink y que apunte al fichero ../ejercicio1/Makefile usaremos el siguiente comando del shell:
+Lo primero que vamos a hacer en este ejercicio es crear un enlace simbólico a un fichero cualquiera usando el comando ln. Por ejemplo, si queremos crear un enlace que se llame `mylink` y que apunte al fichero `../ejercicio1/Makefile` usaremos el siguiente comando del shell:
 
 ```bash
 $ ln -s ../ejercicio1/Makefile mylink
 ```
 
+> `../` hace un acceso hacia el padre, la carpeta `P3` y luego navega a `ejercicio1`. Se crea un archivo en la carpeta actual, `ejercicio2` llamado mylink que accede al `Makefile` de `ejercicio1` cuando clickamos en él.
+> De necesitarse se pueden enc adenar los accesos a los padres `../../../`.
+> Me pregunto si hay un máximo de accesos que nos asegure estar siempre en la raiz del disco o si hay otro comando que ya lo haga.
+
 Invocando ls -l podremos comprobar que el fichero creado es realmente un enlace simbólico y veremos el fichero apuntado:
+
 ```bash
 $ ls -l
 ...
 lrwxrwxrwx 1 christian christian   22 Jul 14 13:23 mylink -> ../ejercicio1/Makefile
 ...
 ```
+
 Ahora usaremos nuestro programa de copia para copiar el enlace simbólico. Asumiendo que dicho programa es ../ejercicio1/copy, ejecutamos:
+
 ```bash
 $ ../ejercicio1/copy mylink mylinkcopy
 ```
-¿Qué tipo de fichero es mylinkcopy? ¿Cuál es el contenido del fichero mylinkcopy? Se pueden usar los comandos ls, stat, cat y diff para obtener las respuestas a estas preguntas.
+
+¿Qué tipo de fichero es `mylinkcopy`? ¿Cuál es el contenido del fichero `mylinkcopy`? Se pueden usar los comandos `ls`, `stat`, `cat` y `diff` para obtener las respuestas a estas preguntas.
+
+> Se trata de una copia del fichero `makefile` de dentro de la carpeta `ejercicio1`
+> El enlace simbólico permite realizar un acceso a otro archivo sin tener que copiarlo, por eso cuando se ha llamado al programa copy no se ha copiado el enlace, sino el archivo al que apunta
+> El comando `stat` y `ls -l` nos permiten ver que es un enlace, pero si hacemos `cat` nos abrirá el contenido del fichero al que apunta.
 
 Es posible que este sea el comportamiento que deseemos, pero también es posible que no. ¿Y si queremos que la copia de un enlace simbólico sea otro enlace simbólico que apunte al mismo fichero que apuntaba el enlace simbólico original?
 
 Vamos a hacer una modificación de nuestro programa de copia del ejercicio anterior, que llamaremos copy2.c. Podemos empezar copiando el programa anterior para luego modificarlo. Haremos entonces una copia usando el comando cp:
+
 ```bash
 $ cp ../ejercicio1/copy.c copy2.c
 ```
-Después editaremos el fichero copy2.c de modo que: 1. Antes de hacer la copia identifique si el fichero origen es un fichero regular, un enlace simbólico u otro tipo de fichero, haciendo uso de la llamada al sistema lstat (consultar su página de manual).
 
-Si el fichero origen es un fichero regular, haremos la copia como en el ejercicio anterior.
+Después editaremos el fichero `copy2.c` de modo que: 
+1. Antes de hacer la copia identifique si el fichero origen es un fichero regular, un enlace simbólico u otro tipo de fichero, haciendo uso de la llamada al sistema `lstat()` (consultar su página de manual).
+> `lstat()` devuelve MUCHA informacion del archivo que se está mirando (Los directorios tambien son ficheros, `SORPRESA :shipit:`)
+> Existe un struct que nos da la info que podemos tratar, tipo de archivo, numero de bloques, etc.
 
-En cambio, si el fichero origen es un enlace simbólico no tenemos que hacer la copia del fichero apuntado sino crear un enlace simbólico que apunte al mismo fichero al que apunta el fichero origen. Para ello tenemos que seguir los siguientes pasos:
+2. Si el fichero origen es un fichero regular, haremos la copia como en el ejercicio anterior.
+```C
+if (S_ISREG(stat_origen.st_mode))
+```
 
-Reservar memoria para hacer una copia de la ruta apuntada. Una llamada a lstat sobre el fichero origen nos permitirá conocer el número de bytes que ocupa el enlace simbólico, que se corresponde con el tamaño de esta ruta sin el carácter null (’\0’) de final de cadena (consultar la página de manual de lstat). Por tanto sumaremos uno al tamaño obtenido de lstat.
+3. En cambio, si el fichero origen es un enlace simbólico no tenemos que hacer la copia del fichero apuntado sino crear un enlace simbólico que apunte al mismo fichero al que apunta el fichero origen. Para ello tenemos que seguir los siguientes pasos:
+```C
+if (S_ISLNK(stat_origen.st_mode))
+```
 
-Copiar en este buffer la ruta del fichero apuntado haciendo uso de la llamada al sistema readlink. Deberemos añadir manualmente el caracter null de final de cadena.
+Reservar memoria para hacer una copia de la ruta apuntada. Una llamada a `lstat` sobre el fichero origen nos permitirá conocer el número de bytes que ocupa el enlace simbólico, que se corresponde con el tamaño de esta ruta sin el carácter null (’\0’) de final de cadena (consultar la página de manual de lstat). Por tanto sumaremos uno al tamaño obtenido de `lstat`.
 
-Usar la llamada al sistema symlink para crear un nuevo enlace simbólico que apunte a esta ruta.
+```C
+char* target_path= (char*) malloc(stat_buffer.st_size + 1);
+```
 
-Debéis consultar las páginas de manual de lstat, readlink y symlink.
 
-Si el fichero origen es de cualquier otro tipo (por ejemplo un directorio) mostrarán un mensaje de error y el programa terminará.
+Copiar en este buffer la ruta del fichero apuntado haciendo uso de la llamada al sistema `readlink`. Deberemos añadir manualmente el caracter null de final de cadena.
+
+```C
+ssize_t target_size = readlink(orig, target_path, stat_buffer.st_size);
+```
+
+Usar la llamada al sistema `symlink` para crear un nuevo enlace simbólico que apunte a esta ruta.
+
+```C    
+if (symlink(target_path, dest) == -1)
+```
+
+Debéis consultar las páginas de manual de `lstat`, `readlink` y `symlink`.
+
+4. Si el fichero origen es de cualquier otro tipo (por ejemplo un directorio) mostrarán un mensaje de error y el programa terminará.
 
 ## Ejercicio 3: Desplazamiento del marcador de posición en ficheros.
-En este ejercicio vamos a crear un programa mostrar.c similar al comando cat, que reciba como parámetro el nombre de un fichero y lo muestre por la salida estándar. En este caso asumiremos que es un fichero regular. Además, nuestro programa recibirá dos argumentos que parsearemos con getopt (consultar su página de manual):
+En este ejercicio vamos a crear un programa `mostrar.c` similar al comando `cat`, que reciba como parámetro el nombre de un fichero y lo muestre por la salida estándar. En este caso asumiremos que es un fichero regular. Además, nuestro programa recibirá dos argumentos que parsearemos con `getopt` (consultar su página de manual):
 
 -n N: indica que queremos saltarnos N bytes desde el comienzo del fichero o mostrar únicamente los N últimos bytes del fichero. Que se haga una cosa o la otra depende de la presencia o no de un segundo flag -e. Si el flag -n no aparece N tomará el valor 0.
 -e: si aparece, se leerán los últimos N bytes del fichero. Si no aparece, se saltarán los primeros N bytes del fichero.
