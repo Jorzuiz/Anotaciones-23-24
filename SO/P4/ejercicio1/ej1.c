@@ -109,6 +109,7 @@ int main(int argc, char **argv)
 		case 'h':
 			printf("Usage");
 			usage();
+			//exit(EXIT_SUCCESS);
 			break;
 		case 'R':
 			opt.recurse=1;
