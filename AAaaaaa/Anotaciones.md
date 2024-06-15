@@ -5,13 +5,16 @@ Red bayesiana??
 Mlegends?
 
 How do Learning Machines? Learn
+
 "Hay unas pelotas" - Ismael
 
 Las reglas cubren la mayoría de los casos, pero no podemos cubrir todos
 
 "Esque los murcianos no saben hablar" - Ismael
 "-Es coña 
+
 *pausa de 2 segundos* 
+
 -Tengo familia en Murcia" -Ismael
 
 librería scikit-learning
