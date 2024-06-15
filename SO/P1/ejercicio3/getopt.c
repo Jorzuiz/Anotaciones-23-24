@@ -58,7 +58,13 @@ int main(int argc, char *argv[]) {
                 options.par_mode = EVEN;
                 break;
             case 'l':
-                options.length = atoi(optarg);
+                char *endptr; // Guarda el puntero del final
+                options.length = strtol(optarg, endptr, 10);
+                if (endptr == optarg || *endptr != '\0') {
+                    fprintf(stderr, "%s: -l requiere de un número, pero se ha introducido %s\n",
+                            argv[0], optarg);
+                    return 1;
+                //options.length = atoi(optarg);
                 break;
             default:
                 exit(EXIT_FAILURE);
