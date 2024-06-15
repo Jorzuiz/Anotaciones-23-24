@@ -357,7 +357,17 @@ En este ejercicio, trabajaremos el uso de `getopt()` una herramienta esencial pa
 >Llamadas sucesivas por el getopt pasan por cada uno de los parámetros.
 >El parametro seguido de un `:` indica que el parámetro tiene un argumento de entrada y se almacena en la variable `char* optarg`
 >La variable `optind` señala el indice al siguiente elemento que apunta argv.
->`strtol()`
+>`strtol()` lee un string, parsea los primeros N caracteres que pueda hasta encontrar algo que no, como una letra y lo devuelve en formato long, asi como devolver el string modificado en el segundo parametro.
+
+```c++
+char *endptr; // Guarda el puntero del final
+options.length = strtol(optarg, endptr, 10);
+
+// Comprobamos si hemos podido leer una cadena con un número, de lo contrario no dejamos ejecutar la opción
+if (endptr == optarg || *endptr != '\0') {
+  fprintf(stderr, "%s: -l requiere de un número, pero se ha introducido %s\n", argv[0], optarg);
+return 1;
+```
 
 ```bash
 $ make
@@ -410,12 +420,15 @@ Asimismo, dado que el argumento title no será procesado por `getopt()` (pues no
 Completa el código y responde a las siguientes preguntas:
 
 1. ¿Qué cadena de caracteres debes utilizar como tercer argumento de `getopt()`?
+
 >El tercer argumento `hel:` corresponde a cada una de las opciones, `h`, `e`, `l` por separado y `:` indica que la opcion `l` acepta un parámetro extra con información.
 
 2. ¿Qué línea de código utilizas para leer el argumento `title`?
->Llamadas recursivas a `optin()` iteran por las opciones marcadas con `-` y por sus parámetros de conter `:`. Al finalizar optind contendrá un índice al siguiente parámetro, que en este caso guardaremos en la opcion `title` usando `options.title = argv[optind];`.
+
+>Llamadas recursivas a `getopt()` iteran por las opciones marcadas con `-` y por sus parámetros de con `:`. Al finalizar optind contendrá un índice al siguiente parámetro, que en este caso guardaremos en la opcion `title` usando `options.title = argv[optind];`.
 
 ## Ejercicio 4
+
 Estudiar el código y el funcionamiento del programa `show-passwd.c`, que lee el contenido del fichero del sistema `/etc/passwd` e imprime por pantalla (o en otro fichero dado) las distintas entradas de `/etc/passwd` –una por línea–, así como los distintos campos de cada entrada. El fichero `/etc/passwd` almacena en formato de texto plano información esencial de los usuarios del sistema, como su identificador numérico de usuario o grupo así como el programa configurado como intérprete de órdenes (shell) predeterminado para cada usuario. Para obtener más información sobre este fichero se ha de consultar su página de manual: `man 5 passwd`
 
 El modo de uso del programa puede consultarse invocándolo con la opción -h:
