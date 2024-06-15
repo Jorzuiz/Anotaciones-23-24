@@ -4,7 +4,7 @@ En esta práctica vamos a hacer varios ejercicios orientados a afianzar nuestro 
 
 Se aconseja al alumno que cree un directorio para la práctica con un subdirectorio por ejercicio. En las instrucciones se asume que el ejercicio N se hace en un subdirectorio llamado ejercicioN dentro del directorio común para la práctica.
 
-El archivo ficheros_p2.tar.gz contiene una serie de ficheros que pueden usarse como punto de partida para el desarrollo de los ejercicios de esta práctica, así como unos makefiles que pueden ser usados para la compilación de los distintos proyectos.
+El archivo [ficheros_p2.tar.gz](https://dacya.github.io/so-docs/ficheros_p2.tar.gz) contiene una serie de ficheros que pueden usarse como punto de partida para el desarrollo de los ejercicios de esta práctica, así como unos makefiles que pueden ser usados para la compilación de los distintos proyectos.
 
 # 2 Ejercicios
 
@@ -44,6 +44,31 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 ```
+> Se sustituye el getc por:
+```c
+	/* Read file using fread and write using fwrite */
+    size_t buffer_size = 1024;  // You can adjust the buffer size
+    unsigned char buffer[buffer_size];
+
+    size_t bytesRead;
+
+    // Devuelve nª de bytes leidos, mete los bytes en buffer, cada uno de 1 byte, buffer_size veces, del archivo file
+	while ((bytesRead = fread(buffer, 1, buffer_size, file)) > 0) {
+        // Mismo funcionamiento, pero en vez de escribirlos en un file, lo hace en stdout
+        size_t bytesWritten = fwrite(buffer, 1, bytesRead, stdout);
+
+        if (bytesWritten < bytesRead) {
+            fclose(file);
+            fprintf(stderr, "Error writing to stdout\n");
+            exit(3);
+        }
+    }
+```
+> Para ello se crea un `buffer[1024]` y se realizan lecturas secuenciales del archivo que se pasan a stdout
+> El final del archivo está controlado por la salide del fread que funciona de la siguiente manera
+> Numero de bytes leidos = fread(buffer donde se guardan, tamaño de la lectura en bytes, tamaño del buffer, descriptor de archivo para leer)
+> El 1 indica que los datos que leemos son de 1 byte, sabemos que es un archivo de texto y que los chars ocupan 1 byte. En caso de leerse datos en formato int o double debería cambiarse a 4 por ejemplo.
+> Asi mismo hay un sector de código que comprueba si se ha producido error en la lectura
 
 ## Ejercicio 2: Escritura y lectura de cadenas de caracteres en ficheros
 
@@ -75,9 +100,28 @@ Lisbon
 
 Por simplicidad para la implementación del programa `read-strings.c`, se ha de desarrollar una función auxiliar `char* loadstr(FILE* input)`. Esta función lee una cadena de caracteres terminada en `'\0'` del fichero cuyo descriptor se pasa como parámetro, reservando dinámicamente la cantidad de memoria adecuada para la cadena leída y retornando dicha cadena. La función tendrá que averiguar primero el número de caracteres de la cadena que comienza a partir de la ubicación actual del puntero de posición del fichero, leyendo caracter a caracter. Una vez detectado el caracter terminador, restaurará el indicador de posición del fichero (moviéndolo hacia atrás) y, finalmente realizará una lectura de la cadena completa.
 
+> La lectura de los argumentos se hace en el fichero mediante el bucle:
+```c
+// i[0] es el programa i[1] el archivo y despues vienen los strings
+for(i=2; i<argc;i++)
+        fprintf(file, "%s\n", argv[i]);       
+```
+> fprintf() da formato a la cadena, poniendo un salto de linea tras cada string
+```c
+// Para más información revisar el código del programa
+while (fgetc(input) != '\0') { length++; }
+fseek(input, pos, SEEK_SET);
+char* str = (char*)malloc(length + 1);
+fread(str, 1, length + 1, input);
+```
+> Se usa un bucle while con fgetc para calcular el numero de caracteres del ficher. Se reinicia el descriptor al inicio, se reserva la memoria más el byte nulo (fgetc() lo ignora) y se cargan los bytes
+
+
 ## Ejercicio 3: Gestión de ficheros de texto y binarios con la biblioteca estándar de C
 
-En este ejercicio de la práctica se desarrollará un programa C más elaborado que lea y escriba de ficheros regulares tanto de texto, como en formato binario. Para su implementación, los estudiantes deberán utilizar al menos las siguientes funciones de la biblioteca estándar de C: `getopt`, `printf`, `fopen`, `fclose`, `fgets`, `fscanf`, `feof`, `fprintf`, `fread`, `fwrite` y `strsep`. Se deben consultar las páginas de manual de estas funciones en caso de duda sobre su comportamiento.
+En este ejercicio de la práctica se desarrollará un programa C más elaborado que lea y escriba de ficheros regulares tanto de texto, como en formato binario. Para su implementación, los estudiantes deberán utilizar al menos las siguientes funciones de la biblioteca estándar de C: `getopt()`, `printf()`, `fopen()`, `fclose()`, `fgets()`, `fscanf()`, `feof()`, `fprintf()`, `fread()`, `fwrite()` y `strsep()`. Se deben consultar las páginas de manual de estas funciones en caso de duda sobre su comportamiento.
+
+> A la hora de separar con `strsep()` es conveniente copiar el puntero original. La separacion por token se hace avanzando hasta detectar el token y sustituirlo por el caracter nulo `\0`, lo cual nos deja despues de la cadena que nos interesa separar sin manera de volver, si hacemos una copia del inicio tendremos una cadena de `string` que termina en byte nulo.
 
 El ejercicio consta de 3 partes (más extensiones opcionales), donde se irán implementando gradualmente distintas características del programa:
 
@@ -102,7 +146,7 @@ El fichero de ejemplo almacena 4 registros de estudiantes, donde la información
 
 Para leer un fichero de texto de estudiantes e imprimir su contenido en formato amigable, el programa `student-records` deberá invocarse especificando las opciones `-i` (input) y `-p` (print) simultáneamente en la línea de comando, donde la opción `-i` acepta un parámetro indicando la ruta del fichero de texto. Así por ejemplo, asumiendo que existe un fichero students-db.txt en el directorio actual que contiene el texto de ejemplo mostrado anteriormente, la ejecución del programa producirá la siguiente salida:
 
-```c++
+```bash
 usuarioso@debian:~/exercise3$ ./student-records -i students-db.txt -p  
 [Entry #0]
         student_id=27
@@ -130,7 +174,7 @@ Por simplicidad en la implementación, cada registro se imprimirá por la salida
 
 Además de las opciones arriba mencionadas, se implementará una opción `-h` (help), que imprima el listado de opciones soportadas por el programa:
 
-```c++
+```bash
 usuarioso@debian:~/exercise3$ ./student-records -h 
 Usage: ./student-records [ -h | -p | -i file ] 
 ```
@@ -138,6 +182,7 @@ Usage: ./student-records [ -h | -p | -i file ]
 La salida generada por esta opción deberá modificarse a medida que se implementen opciones adicionales en el programa, correspondientes a los distintos apartados.
 
 Nota importante: Para la implementación de este apartado se aconseja reutilizar código del programa `show-passwd.c`, suministrado con el Ejercicio 4 de la Práctica 1. En ese programa se realiza el parsing de un fichero de texto con un formato similar al que se emplea en este ejercicio (campos de distinto tipo separados por “:”).
+
 
 ### Parte B
 
@@ -148,17 +193,17 @@ Extender la funcionalidad del programa `student-records` implementando una nueva
 
 typedef struct {
     int student_id; 
-    char NIF[MAX_CHARS_NIF+1];  
+    char NIF[MAX_CHARS_NIF+1];   
     char* first_name;
     char* last_name;
 } student_t;
 ```
 
-El fichero binario a generar tendrá la siguiente estructura. Los primeros 4 bytes del fichero (int) almacenarán el número de registros de estudiantes. A continuación se escribirán los datos de cada registro de estudiantes, uno detrás del otro, almacenando por cada uno de ellos su ID de estudiante (entero de 4 bytes), su NIF, su nombre y apellido (en este orden). Para todas las cadenas de caracteres a escribir en el fichero se almacenará también el caracter terminador, lo cual es clave para poder leer el fichero a posteriori (parte C del ejercicio).
+El fichero binario a generar tendrá la siguiente estructura. Los primeros 4 bytes del fichero `int` almacenarán el número de registros de estudiantes. A continuación se escribirán los datos de cada registro de estudiantes, uno detrás del otro, almacenando por cada uno de ellos su ID de estudiante (entero de 4 bytes), su NIF, su nombre y apellido (en este orden). Para todas las cadenas de caracteres a escribir en el fichero se almacenará también el caracter terminador, lo cual es clave para poder leer el fichero a posteriori (parte C del ejercicio).
 
 En el siguiente ejemplo de ejecución se hace uso del comando `xxd` para mostrar el contenido del fichero generado (nótese que este fichero no puede imprimirse satisfactoriamente con `cat`, al tratarse de un fichero binario):
 
-```c++
+```bash
 ## Check usage
 usuarioso@debian:~/exercise3$ ./student-records -h 
 Usage: ./student-records [ -h | -p | -i file | -o <output_file> ] 
@@ -178,13 +223,54 @@ usuarioso@debian:~/exercise3$ xxd students-db.bin
 00000060: 3435 3233 3947 0050 656e 656c 6f70 6500  45239G.Penelope.
 00000070: 4372 757a 00                             Cruz.
 ```
+> :goberserk: Se puede codificar elementos usando bytes en archivos, pueden ser binarios o texto plano. El texto plano escribe literalmente los caracteres que usamos, son unsigned char y usan la tabla ASCII, teniendo espacio por caracter de 1 byte, y la tabla teniendo solo 128 valores nos deja con bastante espacio desaprovechado. 
+
+> :godmode: Los binarios se codifican en hexadecimal y pueden tener valores de 0 a 255 (Los valores de 0 a 16 son los valores de 0 a 9 y las letras de la A a la F) usando caracteres que se ven como `04` `A2` o `3F` que equivalen a valores de 0-255 cada uno. Cada uno de estos valores codifica un byte y se pueden usar encadenados para representar tipos de 4 bytes por ejemplo.
+
+> :feelsgood: La escritura de tipos es más rápida con valores de multiples bytes, por ejemplo: el numero int 82642 se puede escribir con los digitos 8-2-6-4-2 ocupando 5 bytes en texto plano o se puede escribir 00-01-42-D2 porque sabemos que sus valores binarios son 00000000-00000001-01000010-11010010 (0-1-66-210) que son 4 bytes.
+
+> Se puede abrir archivos con open() o con fopen(), este ultimo es más elaborado y tiene protecciones con el File Descritor `FILE* stream`, el otro es a más bajo nivel y no proteje de escritura en diferentes procesos.
+
+>`fgets(char Buffer, int Length, FILE* file)` -> Carga en el buffer un máximo de size-1 o el siguiente salto de linea. PONE UN BYTE NULO AL FINAL '\0'
+```c
+char line[MAXLEN_LINE_FILE];
+while (fgets(line, MAXLEN_LINE_FILE, file) != NULL)
+```
+
+>`fread(Buffer, sizeof(tipo), lengh, file)` -> Con el stream file, lee lenght elementos de tamaño sizeof y los carga en el buffer. SE PUEDE USAR POR EJEMPLO PARA STRUCTS pero deben de haberse escrito como un binario.*/
+```c
+// Dato inicial del fichero (4 bytes)
+int num_entries;
+fread(&num_entries, 4, 1, file);
+
+student_t student;
+fread(&student, sizeof(student_t), 1, file);
+```
+
+> La diferencia entre escribir/leer en binario y normal es que el normal usa chars y hay que parsear las cosas a mano mientras que el binario se pueden meter cosas como structs sin preocuparse mucho.
+
+>fscanf(FILE, formato, elemento1, elemento2, ...) -> Permite leer del input y parsear a un formato
+```c
+int num_entries;
+fscanf(input, "%d", &num_entries);
+
+student_t student;
+fscanf(input, "%d:%9[^:]:%19[^:]:%19[^\n]",
+            &student.student_id, student.NIF,
+            student.first_name, student.last_name);
+```  
+> `fwrite()` -> escribe en el output. De manera interna funciona con un fputc() llamado en recursivo hasta agotar la cadena de entrada. Aunque el fputc() castea de manera interna a int, realmente escribe byte a byte, asique mientras usemos el mismo formato de escritura que de lectura se puede recosntruir las estructuras de un binario. 
+```c
+fwrite(&student, sizeof(student_t), 1, output); 
+```
+
 
 ### Parte C
 Implementar una nueva opción `-b` (binary ) en el programa que permita imprimir el contenido de un fichero binario de estudiantes existente usando el mismo formato de salida que el especificado en la Parte A del ejercicio. Al indicar la opción `-b` (en lugar de `-p`) en la línea de comandos, el programa asumirá que el formato del fichero de entrada será binario en lugar de texto.
 
 El siguiente ejemplo ilustra la funcionalidad que ha de implementarse en este apartado:
 
-```c++
+```bash
 ## Check usage
 usuarioso@debian:~/exercise3$ ./student-records -h 
 Usage: ./student-records [ -h | -p | -i file | -o <output_file> | -b ] 
@@ -215,6 +301,20 @@ usuarioso@debian:~/exercise2$ ./student-records -i students-db.bin -b
 
 Pista: Se aconseja reutilizar para la implementación la función `loadstr()`, desarrollada en el ejercicio 2.
 
+> Igual que la escritura pero al reves, usamos fread para parsear el binario a nuestro tipo struct y lo escribimos con diferentes prints
+```c++
+    student_t student;
+    for (int i = 0; i < num_entries; i++)
+    {
+        fread(&student, sizeof(student_t), 1, file);
+        printf("[Entry #%d]\n", i);
+        printf("\tstudent_id=%d\n", student.student_id);
+        printf("\tNIF=%s\n", student.NIF);
+        printf("\tfirst_name=%s\n", student.first_name);
+        printf("\tlast_name=%s\n", student.last_name);
+    }
+```
+
 ### Partes opcionales
 
 Opcional 1
@@ -237,7 +337,7 @@ Extender la funcionalidad del programa `student_records.c` con una nueva opción
 
 Ejemplo de ejecución:
 
-```c++
+```bash
 ## Check usage
 usuarioso@debian:~/exercise3$ ./student-records -h 
 Usage: ./student-records [ -h | -p | -i file | -o <output_file> | -b | -a ] 

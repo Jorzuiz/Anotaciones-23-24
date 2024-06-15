@@ -10,7 +10,7 @@ struct hilosDato
 
 void *thread_usuario(void *arg)
 {
-	struct hilosDato* datos= (struct hilosDato*) arg;
+	struct hilosDato* datos = (struct hilosDato*) arg;
 	
 	printf("¡Hola desde el hilo! %d\n", datos->id);
     pthread_exit(NULL); //IMPORTANTE PARA TERMINAR EL PROCESO
@@ -22,6 +22,7 @@ int main(int argc, char* argv[])
 	struct hilosDato hilo;
 	hilo.id = atoi(argv[1]);
 	hilo.priority = atoi(argv[2]);
+	// (Thread, atributos, función, argumentos)
 	if(pthread_create(&id, NULL, thread_usuario, &hilo)!=0){
 		perror("thread");
 		exit(1);

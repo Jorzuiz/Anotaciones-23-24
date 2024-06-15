@@ -9,7 +9,6 @@
 
 int print_text_file(char *path)
 {
-    /* To be completed (part A) */
     FILE *file = fopen(path, "r");
     if (!file)
     {
@@ -20,8 +19,10 @@ int print_text_file(char *path)
     char line[MAXLEN_LINE_FILE];
     while (fgets(line, MAXLEN_LINE_FILE, file) != NULL)
     {
-        //char* token = strsep(&line, ":"); use this to split 
-        
+        //char* end = line, begin = line;
+        //char* token = strsep(&end, ":"); use this to split 
+        //printf("%s, begin")
+
         printf("%s", line);
     }
 
@@ -31,7 +32,6 @@ int print_text_file(char *path)
 
 int print_binary_file(char *path)
 {
-    /* To be completed (part B) */
     FILE *file = fopen(path, "rb");
     if (!file)
     {
@@ -39,6 +39,7 @@ int print_binary_file(char *path)
         return EXIT_FAILURE;
     }
 
+    // Dato inicial del fichero (4 bytes)
     int num_entries;
     fread(&num_entries, sizeof(int), 1, file);
 
@@ -60,7 +61,7 @@ int print_binary_file(char *path)
 int write_binary_file(char *input_file, char *output_file)
 {
     /* To be completed (part C) */
-    FILE *input = fopen(input_file, "r");
+    FILE *input = fopen(input_file, "rb");
     FILE *output = fopen(output_file, "wb");
     if (!input || !output)
     {
@@ -110,11 +111,11 @@ int main(int argc, char *argv[])
             break;
         case 'o':
             options.output_file = optarg;
-			options.input_file=optarg;
+			options.input_file = optarg;
             options.action = WRITE_BINARY_ACT;
             break;
         case 'c':
-            options.input_file=optarg;
+            options.input_file = optarg;
             options.action = PRINT_BINARY_ACT;
             break;
         default:
