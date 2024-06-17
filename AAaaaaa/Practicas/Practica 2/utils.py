@@ -1,9 +1,9 @@
 import numpy as np
 
 def load_data():
-    data = np.loadtxt("data/ex1data1.txt", delimiter=',')
-    X = data[:,0]   # Tamaño (Columna 1)
-    y = data[:,1]   # Numero de habitaciones (Columna 2)
+    data = np.loadtxt("data/houses.txt", delimiter=',')
+    X = data[:,[-3,-2]]   # Tamaño (Columna 1)
+    y = data[:,-1]   # Numero de habitaciones (Columna 2)
     return X, y
 
 def load_data_multi():

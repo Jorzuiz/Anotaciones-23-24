@@ -135,19 +135,22 @@ def backProp(theta1, theta2, X, y, lambda_):
 	z3 = np.dot(a2, theta2.T)			# Aplica pesos a la capa 	[5000, 10]
 	a3 = sigmoid(z3)
 
-	J = cost(theta1, theta2, X, y, lambda_)
 
 	# Derivada parcial del error de la ultima capa con las etiquetas
-	delta3 = (a3 - y) * (a3 * (1 - a3))	
-	
+	#delta3 = (a3 - y) * (a3 * (1 - a3))	
+	delta3 = a3 - y
+
 	# Derivada parcial de la segunda capa respecto al errpr de la tercera
+	#delta2 = np.dot(delta3, theta2[:,1:]) * (a2[:,1:] * (1 - a2[:,1:]))
 	delta2 = np.dot(delta3, theta2[:,1:]) * (a2[:,1:] * (1 - a2[:,1:]))
 
 	# Gradientes (Recalculado de los pesos)
 	# Esto es la retropropagacion de los errores
-	grad1 = np.dot(delta2.T, a1)
-	grad2 = np.dot(delta3.T, a2)
+	grad1 = (1/m)*np.dot(delta2.T, a1)
+	grad2 = (1/m)*np.dot(delta3.T, a2)
 
+	J = cost(theta1, theta2, X, y, lambda_)
+	
 	return (J, grad1, grad2)
 
 #########################################################################
@@ -203,8 +206,8 @@ def training (X, Y, hidden_size, output_size, epsilon, alpha, lambda_, epochs):
 
 		m = len(X)
 		# Actualización de los pesos
-		theta1 -= alpha * grad1/m
-		theta2 -= alpha * grad2/m
+		theta1 -= alpha * grad1
+		theta2 -= alpha * grad2
 
 		if epoch % 100 == 0:
 			print(f'Epoch {epoch}, Cost: {J}')

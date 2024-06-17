@@ -3,28 +3,40 @@ import numpy as np
 #########################################################################
 # NN
 #
-def predict(theta1, theta2, X):
-	"""
-	Predict the label of an input given a trained neural network.
 
-	Parameters
+def sigmoid(z):
+    return 1 / (1 + np.exp(-z))
+
+def predict(theta1, theta2, X):
+    """
+    Aplica una prediccion a X dada una red entrenada en formato de pesos theta1 y theta2.
+    Parameters
+    ----------
+	Parametros
 	----------
 	theta1 : array_like
-		Weights for the first layer in the neural network.
-		It has shape (2nd hidden layer size x input size)
+		Pesos de la promera capa	[tamaño de capa oculta x capa de entrada]
 
-	theta2: array_like
-		Weights for the second layer in the neural network. 
-		It has shape (output layer size x 2nd hidden layer size)
+	theta1 : array_like
+		Pesos de la promera capa	[tamaño de capa de salida x capa oculta]
 
 	X : array_like
-		The image inputs having shape (number of examples x image dimensions).
+		Entradas de la red 			[numero de ejemplos x numero de dimensiones]
 
-	Return 
-    ------
+	Devuelve
+	-------
 	p : array_like
-		Predictions vector containing the predicted label for each example.
-		It has a length equal to the number of examples.
-	"""
+		Salida de la red 			[numero de ejemplos x numero de neuronas de salida]
+    """
+    m = X.shape[0]	# Numero de ejemplos
+    
+    X1s = np.hstack([np.ones((m, 1)), X])	# Añade columna de 1 (bias)
 
-	return p
+    a2 = sigmoid(np.dot(X1s, theta1.T))	    # Capa oculta, resultadod e aplicar pesos a la entrada
+    a2 = np.hstack([np.ones((m, 1)), a2])	# Añade columna de 1 (bias)
+
+    h = sigmoid(np.dot(a2, theta2.T))		# Capa de salida, resultado de aplicar pesos a la capa oculta
+
+    p = np.argmax(h, axis=1) 				# "deshace" el one-hot encoding
+
+    return p

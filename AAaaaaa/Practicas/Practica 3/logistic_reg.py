@@ -94,7 +94,6 @@ def compute_cost_reg(X, y, w, b, lambda_=1):
     
     m = len(y)  # Number of training examples
     z = np.dot(X, w) + b
-    z = np.clip(z, -1000, 1000)  # Avoid overflow
     h = sigmoid(z)  # Sigmoid function
 
     # Calculate the standard logistic regression cost
@@ -126,7 +125,6 @@ def compute_gradient_reg(X, y, w, b, lambda_=1):
     """
     m = len(y)  # Number of training examples
     z = np.dot(X, w) + b
-    z = np.clip(z, -1000, 1000)  # Avoid overflow
     h = sigmoid(z)  # Sigmoid function
 
     # Calculate the gradient without regularization
@@ -175,8 +173,8 @@ def gradient_descent(X, y, w_in, b_in, cost_function, gradient_function, alpha, 
         
         dj_db, dj_dw = gradient_function(X, y, w, b, lambda_)
 
-        w -= alpha * dj_dw
-        b -= alpha * dj_db
+        w = w - alpha * dj_dw
+        b = b - alpha * dj_db
 
 
     return w, b, J_history
