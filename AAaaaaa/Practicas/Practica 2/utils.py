@@ -2,14 +2,16 @@ import numpy as np
 
 def load_data():
     data = np.loadtxt("data/ex1data1.txt", delimiter=',')
-    X = data[:,0]
-    y = data[:,1]
+    X = data[:,0]   # Tamaño (Columna 1)
+    y = data[:,1]   # Numero de habitaciones (Columna 2)
     return X, y
 
 def load_data_multi():
     data = np.loadtxt("data/houses.txt", delimiter=',')
-    # thing = data[:,:-1] matriz de dos dimensiones, desdela 0 es :, desdela 0 a la -1
-    # thing2 = data[:,-1:] se salta la columna 1 y va al final?
-    # thing 3 = data[:,3:4]
-    x = data[:,:-1]
-    return x
+    # [:,:] la coma separa filas de columnas, los doble puntos indican que seleccionan todo
+    # thing = data[:,:-1] coge TODAS salvo la ultima columna
+    # thing2 = data[:,-1:] coge TODAS salvo la primera columna
+    # thing 3 = data[:,[3,4]] coge columnas específicas
+    x = data[:,:-1] # Tamaño, Numero de habitaciones
+    y = data[:,-1] # Precio
+    return x, y

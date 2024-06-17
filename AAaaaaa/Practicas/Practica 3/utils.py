@@ -3,6 +3,13 @@ import matplotlib.pyplot as plt
 
 def load_data(data, limit):
     data = np.loadtxt(data, delimiter=limit)
+    x = data[:,:-1]
+    decision = data[:,-1]
+    return x, decision
+
+
+def load_data2(data, limit):
+    data = np.loadtxt(data, delimiter=limit)
     x = data[:,:2]
     decision = data[:,2]
     return x, decision
