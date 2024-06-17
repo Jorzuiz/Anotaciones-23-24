@@ -16,6 +16,7 @@ Cada entrada de la neurona se pondera con un peso diferente que simula el funcio
 Esta idea se aplica en un tipo de red conocida como Perceptrón Multicapa
 
 $\boxed{\text{Capa neuronal de entrada}}\rightarrow \boxed{\text{Capa/s oculta}} \rightarrow \boxed{\text{Capa de salida}} $
+
 ![Alt text](./Assets/neuralEsquema.png)
 
 Cada una de estas conexiones se pondera con diferentes pesos, una neurona de la capa entrada puede conectarse con peso $0,1$ a la primera de la siguiente, $0,5$ a la segunda, $0,3$ a la tercera....
